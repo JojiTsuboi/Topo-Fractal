@@ -1,0 +1,331 @@
+$ **********************************************************
+$ OPTISHAPE-TS Optimize Parameter (TS_Studio)
+$ Version 2019
+$ Date         : 2020/ 2/21   9:27:56
+$ **********************************************************
+$ **********************************************************
+$ 定数
+$ **********************************************************
+$ 最適化の種類
+OPT_TYPE_ANALYSIS = 0
+OPT_TYPE_SHAPE    = 1
+OPT_TYPE_TOPOLOGY = 2
+OPT_TYPE_LEVEL_SET= 4
+OPT_TYPE_BEAD     = 5
+
+$ 評価関数の種類
+FUNC_TOTAL_VOLUME = 1
+FUNC_DESIGN_VOLUME = 2
+FUNC_TOTAL_MASS = 3
+FUNC_DESIGN_MASS = 4
+FUNC_INERTIA_MOMENT = 5
+FUNC_SURF_AREA = 6
+FUNC_SHAPE_VARIATION = 7
+FUNC_CGRAV_DIST = 8
+FUNC_THICKNESS_SHORTAGE = 11
+FUNC_UNDERCUT = 12
+FUNC_THICKNESS_SURPLUS = 13
+FUNC_OVERLAP_VOLUME = 21
+FUNC_DEFICIT_VOLUME = 22
+FUNC_DEVIATION_VOLUME = 23
+FUNC_COMPLIANCE = 101
+FUNC_MISES_STRESS = 102
+FUNC_PR_STRESS = 103
+FUNC_PR_STRAIN = 104
+FUNC_SHEAR_STRESS = 105
+FUNC_DISP = 106
+FUNC_APR_STRAIN = 107
+FUNC_MIN_PR_STRESS = 108
+FUNC_MIN_PR_STRAIN = 109
+FUNC_MAX_MISES_STRESS = 110
+FUNC_MAX_DISP = 111
+FUNC_MAG_DISP = 113
+FUNC_EIGENVALUE = 201
+FUNC_EIGEN_DISP = 202
+FUNC_EIGEN_DIFF = 203
+FUNC_NATURAL_FREQUENCY = 204
+FUNC_THERMAL_STRESS = 301
+FUNC_THERMAL_DISP = 302
+FUNC_BUCKLING_LOAD = 401
+FUNC_EQUIV_ALT_STRESS = 501
+FUNC_NL_COMPLIANCE = 601
+FUNC_FREQ_DISP = 701
+FUNC_FREQ_VELO = 702
+FUNC_FREQ_ACCEL = 703
+FUNC_FREQ_NORMAL_A = 704
+FUNC_FREQ_NORMAL_P = 705
+FUNC_FLUID_PLIN = 801
+FUNC_FLUID_PDB = 802
+FUNC_BEAD_OFFSET_AREA = 901
+FUNC_BEAD_GRAY_AREA_1 = 903
+FUNC_BEAD_ROUGHNESS = 904
+FUNC_BEAD_GRAY_AREA_2 = 905
+FUNC_PLUGIN_STATIC = 1001
+FUNC_PLUGIN_GENERAL = 1002
+
+$ 評価関数の評価方法
+FUNC_METHOD_RATIO = 0
+FUNC_METHOD_ABSOLUTE = 1
+
+$ 形状変動制限の種類
+SHAPE_RESTRICT_SECTION = 1
+SHAPE_RESTRICT_CASTING = 2
+SHAPE_RESTRICT_PLANE = 3
+SHAPE_RESTRICT_CYLINDER = 4
+SHAPE_RESTRICT_SIM_SECTION = 5
+SHAPE_RESTRICT_TANGENTIAL_VARIATION = 6
+SHAPE_RESTRICT_WALL = 7
+SHAPE_RESTRICT_THICKNESS = 8
+SHAPE_RESTRICT_UNIFORM_THICKNESS = 9
+SHAPE_RESTRICT_BEAD_GRAD = 13
+
+$ 形状変動制限の種類
+LEVEL_SET_RESTRICT_UNDERCUT = 1
+
+$ トポロジー密度変動制限の種類
+TOPO_RESTRICT_SECTION = 1
+TOPO_RESTRICT_SYMMETRY = 2
+TOPO_RESTRICT_SYMMETRY_SECTION = 3
+TOPO_RESTRICT_QUARTER = 4
+TOPO_RESTRICT_QUARTER_SECTION = 5
+TOPO_RESTRICT_CYLINDER = 6
+TOPO_RESTRICT_AXISYMMETRY = 7
+TOPO_RESTRICT_USER = 8
+TOPO_RESTRICT_USER_SECTION = 9
+
+$ トポロジー密度変動制限の指定方法
+TOPO_RESTRICT_METHOD_COORD = 0
+TOPO_RESTRICT_METHOD_BEAM = 1
+
+$ 解析ソルバーの種類
+STATIC_SPARSE = 1
+STATIC_ICCG = 3
+STATIC_PARDISO = 4
+EIGEN_SUBSPACE = 11
+EIGEN_LANCZOS = 12
+
+$ 数学定数
+PI = 3.1415926535898
+
+$ **********************************************************
+$ 共通パラメータ
+$ **********************************************************
+$ 最適化の種類
+OPTIMIZE_TYPE = OPT_TYPE_TOPOLOGY
+
+$ 目的関数
+$ Format: { {{function, method}, weighting_factor, subcase, mode, dummy, coordinate, {property...}, {extra_subcase...}}, ...}
+OBJECT_FUNC = { {{FUNC_COMPLIANCE, FUNC_METHOD_RATIO},  1.0000e+00,  1,  0,  0,  0, {}, {}},\
+                {{FUNC_COMPLIANCE, FUNC_METHOD_RATIO},  1.0000e-02,  2,  0,  0,  0, {}, {}} }
+
+$ 制約関数
+$ Format: { {{function, method}, constraint_value, subcase, mode, flag, coordinate, {property...}, {extra_subcase...}}, ...}
+CONST_FUNC =  { {{FUNC_TOTAL_VOLUME, FUNC_METHOD_RATIO},  5.0000e-01,  0,  0,  0,  0, {}, {}} }
+
+$ 計算機ごとの設定
+SCRATCH_DIR = "."
+OUTPUT_DIR = "."
+MEM_SIZE = 16000
+MEMORY_GRADUALLY_INCREASE_FLAG = 0
+SE_OPTION = 1
+PARALLEL_THREAD = 8
+PARALLEL_PROCESS = 0
+QUINT_LICENSE_FILE = 
+QUINT_LICENSE_RETRY = 1
+
+$ 解析共通パラメータ
+STATIC_SOLVER_TYPE = STATIC_PARDISO
+EIGEN_SOLVER_TYPE = EIGEN_LANCZOS
+EIGEN_MODE_INC = 1
+EXTRA_EIGEN_MODE_INC = -1
+VECT_BUF_SIZE = 0
+SAVE_VECT_FLAG = 1
+MODE_TRACK_TYPE = 2
+CG_TOL =   1.0000e+00
+$ Format:{{subcase, {element id, ...} (, {property id, ...}) }, ...}
+DISABLE_ELEMENT = {  }
+
+$ 最適化共通パラメータ
+IT_MAX = 50
+NONDESIGN_PROP = { }
+
+$ 接触解析
+$ Format: { {subcase, {property, ...} }, ...}
+CONTACT_ANALYSIS = {  }
+CONTACT_PENALTY = {  1.0000e-01,   1.0000e+04,   1.0000e+04,   1.0000e+01}
+CONTACT_TOL = {  1.0000e-03,   1.0000e-03,   1.0000e-20,   1.0000e-03}
+CONTACT_IT = {40, 30, 10}
+CONTACT_NORMAL_ANGLE_THRESHOLD =   1.5000e+02
+
+$ 大変形解析
+$ Format: { {subcase, {{load factor, compliance}, ...} }, ...}
+NL_ANALYSIS = {  }
+$ Format: { {subcase, {property, ...} }, ...}
+NL_ANALYSIS_CONTACT = {  }
+NL_CONTACT_PENALTY =   1.0000e+04
+NL_CONTACT_TOL = {  1.0000e-03,   1.0000e-20,   1.0000e-03}
+NL_CONTACT_IT = 40
+NL_CONTACT_NORMAL_ANGLE_THRESHOLD =   1.5000e+02
+
+$ プラグイン
+PLUGIN_NAME1 = {  }
+PLUGIN_NAME2 = {  }
+PLUGIN_NAME_GEN = {  }
+PLUGIN_DEBUG = 0
+PLUGIN_RELEASE_LICENSE = 0
+
+$ **********************************************************
+$ 形状最適化専用パラメータ
+$ **********************************************************
+$ 形状最適化の重要パラメータ
+SHAPE_CONST_SUBCASE = 0
+
+$ 評価関数の重要パラメータ
+AVERAGE_STRESS_STRAIN = 2
+FAT_TYPE = 1
+$ Format: { {group id, {{subcase, weight}, ...}, strength}, ...}
+SUBCASE_GROUP = {  }
+MINIMUM_THICKNESS =   0.0000e+00
+DRAFT_ANGLE =   0.0000e+00
+MAXIMUM_THICKNESS =   0.0000e+00
+DEVIATION_VOLUME = 0
+DEFICIT_VOLUME = 0
+OVERLAP_VOLUME = 0
+FREQ_NORMAL_SET = {  }
+FREQ_NORMAL_ANGLE_NUM = 30
+
+
+$ 評価関数のオプションパラメータ
+EVAL_SHAPE_VARIATION = {  1.0000e+00,   2.0000e+00,   0.0000e+00}
+VOLUME_SHIFT =   1.0000e-03
+
+$ 形状変動制限
+$ Format: { {type, {property, ...}, coordinate, dimension}, ...}
+SHAPE_RESTRICT = {  }
+SHAPE_RESTRICT_WALL_PROP = 0
+
+$ 板厚最適化
+$ Format: {{property, minimum thickness, maximum thickness}, ...}
+SHAPE_PLATE_VARIABLE = {  }
+
+$ 形状最適化のオプションパラメータ
+SHAPE_CONV_TOL =   1.0000e-04
+SHAPE_NR_MAX = {2, 4}
+SHAPE_NR_TYPE = 0
+SHAPE_SUBJ_TOL_UPPER = {  2.0000e-02,   5.0000e-03}
+SHAPE_SUBJ_TOL_LOWER = {  2.0000e-02,   5.0000e-03}
+SHAPE_CONVERGED_LIMIT = {  1.0000e+02,   1.0000e-02}
+SHAPE_CONST_CORRECT = { }
+SHAPE_CONST_CORRECT_PROP = { }
+SHAPE_REDUCE_FLAG = 1
+$ Format: {Initial Value, Maximum Value, Minimum Value}
+SHAPE_NORMAL_FACT = {  5.0000e-02,   5.0000e-01,   5.0000e-03}
+SHAPE_ROBUST_FACT =   0.0000e+00
+$ Format: {Allowable Maximum Strain, Allowable Error Factor, Allowable Correcting Factor}
+SHAPE_MAX_STR = {  1.0000e-01,   9.5000e-01,   4.0960e+03}
+$ Format: {強度, 影響範囲, RBE3 強度, RBE3 感度係数}
+SHAPE_RESTRICT_INTENSITY = {  1.0000e+00,   1.0000e+00,   1.0000e+00,   1.0000e+00}
+SHAPE_RESTRICT_PROP_BOUND = 0
+SHAPE_RESTRICT_RBE3 = 1
+SHAPE_EXTRACT_MAX_FACT = {  3.0000e+01,   5.0000e-01}
+SHAPE_REMESH_FACT =   1.0000e-02
+SHAPE_REMESH_STEP =  { }
+SHAPE_REMESH_PROP =  { }
+
+$ **********************************************************
+$ トポロジー最適化専用パラメータ
+$ **********************************************************
+$ トポロジー密度変動制限
+$ Format: { {type, {property, ...}, coordinate or EID, length, extra_int, extra_double}, ...}
+TOPO_RESTRICT = {  }
+
+$ 型抜きトポロジー最適化の指定
+TOPO_DRAW_FLAG = 0
+TOPO_DRAW_BASE_COORD = 0
+TOPO_DRAW_ZOOM_NUM = 2
+TOPO_DRAW_SMOOTH_LENGTH =   0.0000e+00
+$ 抜き方向の指定
+$ Format: { {Coord ID, Negative(-1) or Positive(Default)  Direction, {Property ID, ...} }, ...}
+TOPO_DRAW = {  }
+
+$ トポロジー最適化のオプションパラメータ
+TOPO_CONST_SUBCASE = 0
+TOPO_CONV_TOL =   1.0000e-04
+TOPO_SUBJ_TOL_UPPER = {  2.0000e-02,   5.0000e-03}
+TOPO_SUBJ_TOL_LOWER = {  2.0000e-02,   5.0000e-03}
+TOPO_NR_MAX = {1, 1}
+TOPO_SEGMENTATION_FLAG = 1
+TOPO_INIT_MODIFICATION = 0
+TOPO_SMOOTH_FACT =   1.0000e+00
+TOPO_BETA_FLAG = 0
+TOPO_INIT_ZERO_PROP = { }
+TOPO_INIT_DENS_IT = -1
+TOPO_INIT_DENS_FILE = ""
+TOPO_MOVELIMIT =   0.0000e+00
+TOPO_BASE_THICKNESS = { }
+
+$ 固有振動数最大化における静剛性重み
+$ Format: { {Subcase ID, weight}, ...}
+TOPO_EIGEN_STIFF = { {1,   8.0000e-01},\
+                         {2,   8.0000e-01} }
+
+$ 細い部材の抑制機能
+$ Format: { {length, {property, ...} }, ...}
+TOPO_MIN_MEMBER_FILTER = {  }
+
+$ **********************************************************
+$ レベルセット法形状最適化専用パラメータ
+$ **********************************************************
+$ レベルセット法形状最適化の重要パラメータ
+LEVEL_SET_EFFECT_LENGTH =   0.00000e+00
+LEVEL_SET_CONST_SUBCASE = 0
+
+$ 形状変動制限
+$ Format: { {type, {property, ...}, coordinate, dimension}, ...}
+LEVEL_SET_RESTRICT = {  }
+
+$ レベルセット法形状最適化のオプションパラメータ
+LEVEL_SET_STL_THRESHOLD =   5.00000e-01
+LEVEL_SET_HOLE = {  }
+
+$ **********************************************************
+$ ビード最適化専用パラメータ
+$ **********************************************************
+$ ビード最適化の重要パラメータ
+BEAD_VARIABLE = {  }
+BEAD_INIT_HEIGHT_RATIO =   5.0000000e-01
+BEAD_CONST_SUBCASE = 0
+
+$ ビード最適化のオプションパラメータ
+BEAD_MOVELIMIT =   5.0000e-01
+BEAD_INIT_HEIGHT_FILE = ""
+BEAD_FUNC_METHOD = 1
+
+$ **********************************************************
+$ 出力ファイル
+$ **********************************************************
+$ FEM モデル (Nastran Bulk Data フォーマット)
+OUTPUT_BULK =  { }
+DISABLE_OUTPUT_BULK_DATA = {  }
+
+$ 解析，最適化結果 (Nastran OUTPUT2 フォーマット)
+OUTPUT_OP2 =   { }
+OUTPUT_SENSITIVITY = 1
+OUTPUT_SENSITIVITY_VECTOR = 0
+OUTPUT_EIGEN_MODE = 1
+OUTPUT_STRESS = 0
+OUTPUT_STRAIN = 0
+DISABLE_OUTPUT_PROP = { }
+
+$ そのほかのファイル
+OUTPUT_FEMAP = 
+OUTPUT_STL =   
+OUTPUT_IDEAS = 
+OUTPUT_DVGRID = 
+OUTPUT_ANSYS = 
+ANSYS_REFERENCE_FILE = ""
+
+OUTPUT_ALL_PARAM = 1
+
+PARAMETER_FORMAT_VERSION = 2018
+

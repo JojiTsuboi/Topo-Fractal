@@ -1,0 +1,1734 @@
++----------------------------
+| OPTISHAPE-TS Started
++----------------------------
+OPTISHAPE-TS 2019 Topology Module 
+Topology Optimization Program based on H1 Gradient Method
+Copyright(C) 2003-2019 Quint Corporation
+Release 0 Build Nov 25 2019
+Platform: WINDOWS EM64T
+Windows Version: 10.0 (Windows 10) 
+CPU: Intel64(AMD64)  Family:6(0x006)  Model:158(0x9E)  Stepping:12(0xC)
+Number of Logical Threads:  8 = 1[CPU] * 8[Core/CPU] * 1[Thread/Core]
+  L1I Cache: 8*32[KB] 8-way set assoc. 64[B] line
+  L1D Cache: 8*32[KB] 8-way set assoc. 64[B] line
+  L2 Cache:  8*256[KB] 4-way set assoc. 64[B] line
+  L3 Cache:  1*12288[KB] 12-way set assoc. 64[B] line
+Physical Memory:   Total: 23.9[GB]   Used : 11.0[GB]   Free : 12.8[GB]
+Page File      :   Total: 27.4[GB]   Used : 17.8[GB]   Free :  9.5[GB]
+
+| WARNING 11041: Intel MKL Pardiso ソルバー(STATIC_SOLVER_TYPE = 4)を使用する際は，パラメータ MEMORY_GRADUALLY_INCREASE_FLAG が強制的に 1 になります．この機能制限は将来のバージョンで削除予定です．
+03/31/20 23:31:54 : Reading parameter file [param\0.01_smooth1.0.txt] ... OK
+03/31/20 23:31:54 : Available work area : 16000[MBytes]
+--- License System Configuration ---
+Environment Variable :
+  QUINT_LICENSE_FILE=@127.0.0.1
+  LM_LICENSE_FILE=
+Windows Registry Entry :
+  Key  : HKEY_LOCAL_MACHINE\SOFTWARE\FLEXlm License Manager
+    Name : QUINT_LICENSE_FILE  ... not found
+    Name : LM_LICENSE_FILE     ... not found
+  Key  : HKEY_CURRENT_USER\Software\FLEXlm License Manager  ... not found
+Parameter File :
+  QUINT_LICENSE_FILE = 
+------------------------------------
+--- Quint License System Information ---
+  OPT_SL     : 365 days until expiration
+  OPT_SL_SEA : 365 days until expiration
+----------------------------------------
+03/31/20 23:31:54 : Checking licenses started.
+Program license
+  Feature: OPT_SL
+  Version: 2019.00
+SE(Large scale analysis) option license
+  Feature: OPT_SL_SEA
+  Version: 2019.00
+03/31/20 23:31:54 : The program license was obtained successfully.
+03/31/20 23:31:54 : SE(Large scale analysis) option license was obtained successfully.
+--- Parameters ---
+$ **********************************************************
+$ 定数
+$ **********************************************************
+$ 最適化の種類
+OPT_TYPE_ANALYSIS = 0
+OPT_TYPE_SHAPE    = 1
+OPT_TYPE_TOPOLOGY = 2
+OPT_TYPE_LEVEL_SET= 4
+OPT_TYPE_BEAD     = 5
+
+$ 評価関数の種類
+FUNC_TOTAL_VOLUME = 1
+FUNC_DESIGN_VOLUME = 2
+FUNC_TOTAL_MASS = 3
+FUNC_DESIGN_MASS = 4
+FUNC_INERTIA_MOMENT = 5
+FUNC_SURF_AREA = 6
+FUNC_SHAPE_VARIATION = 7
+FUNC_CGRAV_DIST = 8
+FUNC_THICKNESS_SHORTAGE = 11
+FUNC_UNDERCUT = 12
+FUNC_THICKNESS_SURPLUS = 13
+FUNC_OVERLAP_VOLUME = 21
+FUNC_DEFICIT_VOLUME = 22
+FUNC_DEVIATION_VOLUME = 23
+FUNC_COMPLIANCE = 101
+FUNC_MISES_STRESS = 102
+FUNC_PR_STRESS = 103
+FUNC_PR_STRAIN = 104
+FUNC_SHEAR_STRESS = 105
+FUNC_DISP = 106
+FUNC_APR_STRAIN = 107
+FUNC_MIN_PR_STRESS = 108
+FUNC_MIN_PR_STRAIN = 109
+FUNC_MAX_MISES_STRESS = 110
+FUNC_MAX_DISP = 111
+FUNC_MAG_DISP = 113
+FUNC_EIGENVALUE = 201
+FUNC_EIGEN_DISP = 202
+FUNC_EIGEN_DIFF = 203
+FUNC_NATURAL_FREQUENCY = 204
+FUNC_THERMAL_STRESS = 301
+FUNC_THERMAL_DISP = 302
+FUNC_BUCKLING_LOAD = 401
+FUNC_EQUIV_ALT_STRESS = 501
+FUNC_NL_COMPLIANCE = 601
+FUNC_FREQ_DISP = 701
+FUNC_FREQ_VELO = 702
+FUNC_FREQ_ACCEL = 703
+FUNC_FREQ_NORMAL_A = 704
+FUNC_FREQ_NORMAL_P = 705
+FUNC_FLUID_PLIN = 801
+FUNC_FLUID_PDB = 802
+FUNC_BEAD_OFFSET_AREA = 901
+FUNC_BEAD_GRAY_AREA_1 = 903
+FUNC_BEAD_ROUGHNESS = 904
+FUNC_BEAD_GRAY_AREA_2 = 905
+FUNC_PLUGIN_STATIC = 1001
+FUNC_PLUGIN_GENERAL = 1002
+
+$ 評価関数の評価方法
+FUNC_METHOD_RATIO = 0
+FUNC_METHOD_ABSOLUTE = 1
+
+$ 形状変動制限の種類
+SHAPE_RESTRICT_SECTION = 1
+SHAPE_RESTRICT_CASTING = 2
+SHAPE_RESTRICT_PLANE = 3
+SHAPE_RESTRICT_CYLINDER = 4
+SHAPE_RESTRICT_SIM_SECTION = 5
+SHAPE_RESTRICT_TANGENTIAL_VARIATION = 6
+SHAPE_RESTRICT_WALL = 7
+SHAPE_RESTRICT_THICKNESS = 8
+SHAPE_RESTRICT_UNIFORM_THICKNESS = 9
+SHAPE_RESTRICT_BEAD_GRAD = 13
+
+$ 形状変動制限の種類
+LEVEL_SET_RESTRICT_UNDERCUT = 1
+
+$ トポロジー密度変動制限の種類
+TOPO_RESTRICT_SECTION = 1
+TOPO_RESTRICT_SYMMETRY = 2
+TOPO_RESTRICT_SYMMETRY_SECTION = 3
+TOPO_RESTRICT_QUARTER = 4
+TOPO_RESTRICT_QUARTER_SECTION = 5
+TOPO_RESTRICT_CYLINDER = 6
+TOPO_RESTRICT_AXISYMMETRY = 7
+TOPO_RESTRICT_USER = 8
+TOPO_RESTRICT_USER_SECTION = 9
+
+$ トポロジー密度変動制限の指定方法
+TOPO_RESTRICT_METHOD_COORD = 0
+TOPO_RESTRICT_METHOD_BEAM = 1
+
+$ 解析ソルバーの種類
+STATIC_SPARSE = 1
+STATIC_ICCG = 3
+STATIC_PARDISO = 4
+EIGEN_SUBSPACE = 11
+EIGEN_LANCZOS = 12
+
+$ 数学定数
+PI = 3.1415926535898
+
+$ **********************************************************
+$ 共通パラメータ
+$ **********************************************************
+$ 最適化の種類
+OPTIMIZE_TYPE = OPT_TYPE_TOPOLOGY
+
+$ 目的関数
+$ Format: { {{function, method}, weighting_factor, subcase, mode, dummy, coordinate, {property...}, {extra_subcase...}}, ...}
+OBJECT_FUNC = { {{FUNC_COMPLIANCE, FUNC_METHOD_RATIO}, 1.0000e+000,  1,  0,  0,  0, {}, {}},\
+                {{FUNC_COMPLIANCE, FUNC_METHOD_RATIO}, 1.0000e-002,  2,  0,  0,  0, {}, {}} }
+
+$ 制約関数
+$ Format: { {{function, method}, constraint_value, subcase, mode, flag, coordinate, {property...}, {extra_subcase...}}, ...}
+CONST_FUNC =  { {{FUNC_TOTAL_VOLUME, FUNC_METHOD_RATIO}, 5.0000e-001,  0,  0,  0,  0, {}, {}} }
+
+$ 計算機ごとの設定
+SCRATCH_DIR = "."
+OUTPUT_DIR = "."
+MEM_SIZE = 16000
+MEMORY_GRADUALLY_INCREASE_FLAG = 1
+SE_OPTION = 1
+PARALLEL_THREAD = 8
+PARALLEL_PROCESS = 0
+QUINT_LICENSE_FILE = 
+QUINT_LICENSE_RETRY = 1
+
+$ 解析共通パラメータ
+STATIC_SOLVER_TYPE = STATIC_PARDISO
+EIGEN_SOLVER_TYPE = EIGEN_LANCZOS
+EIGEN_MODE_INC = 1
+EXTRA_EIGEN_MODE_INC = -1
+VECT_BUF_SIZE = 0
+SAVE_VECT_FLAG = 1
+MODE_TRACK_TYPE = 2
+CG_TOL =  1.0000e+000
+$ Format:{{subcase, {element id, ...} (, {property id, ...}) }, ...}
+DISABLE_ELEMENT = {  }
+
+$ 最適化共通パラメータ
+IT_MAX = 50
+NONDESIGN_PROP = { }
+
+$ 接触解析
+$ Format: { {subcase, {property, ...} }, ...}
+CONTACT_ANALYSIS = {  }
+CONTACT_PENALTY = { 1.0000e-001,  1.0000e+004,  1.0000e+004,  1.0000e+001}
+CONTACT_TOL = { 1.0000e-003,  1.0000e-003,  1.0000e-020,  1.0000e-003}
+CONTACT_IT = {40, 30, 10}
+CONTACT_NORMAL_ANGLE_THRESHOLD =  1.5000e+002
+
+$ 大変形解析
+$ Format: { {subcase, {{load factor, compliance}, ...} }, ...}
+NL_ANALYSIS = {  }
+$ Format: { {subcase, {property, ...} }, ...}
+NL_ANALYSIS_CONTACT = {  }
+NL_CONTACT_PENALTY =  1.0000e+004
+NL_CONTACT_TOL = { 1.0000e-003,  1.0000e-020,  1.0000e-003}
+NL_CONTACT_IT = 40
+NL_CONTACT_NORMAL_ANGLE_THRESHOLD =  1.5000e+002
+
+$ プラグイン
+PLUGIN_NAME1 = {  }
+PLUGIN_NAME2 = {  }
+PLUGIN_NAME_GEN = {  }
+PLUGIN_DEBUG = 0
+PLUGIN_RELEASE_LICENSE = 0
+
+$ **********************************************************
+$ 形状最適化専用パラメータ
+$ **********************************************************
+$ 形状最適化の重要パラメータ
+SHAPE_CONST_SUBCASE = 0
+
+$ 評価関数の重要パラメータ
+AVERAGE_STRESS_STRAIN = 2
+FAT_TYPE = 1
+$ Format: { {group id, {{subcase, weight}, ...}, strength}, ...}
+SUBCASE_GROUP = {  }
+MINIMUM_THICKNESS =  0.0000e+000
+DRAFT_ANGLE =  0.0000e+000
+MAXIMUM_THICKNESS =  0.0000e+000
+DEVIATION_VOLUME = 0
+DEFICIT_VOLUME = 0
+OVERLAP_VOLUME = 0
+FREQ_NORMAL_SET = {  }
+FREQ_NORMAL_ANGLE_NUM = 30
+
+
+$ 評価関数のオプションパラメータ
+EVAL_SHAPE_VARIATION = { 1.0000e+000,  2.0000e+000,  0.0000e+000}
+VOLUME_SHIFT =  1.0000e-003
+
+$ 形状変動制限
+$ Format: { {type, {property, ...}, coordinate, dimension}, ...}
+SHAPE_RESTRICT = {  }
+SHAPE_RESTRICT_WALL_PROP = 0
+
+$ 板厚最適化
+$ Format: {{property, minimum thickness, maximum thickness}, ...}
+SHAPE_PLATE_VARIABLE = {  }
+
+$ 形状最適化のオプションパラメータ
+SHAPE_CONV_TOL =  1.0000e-004
+SHAPE_NR_MAX = {2, 4}
+SHAPE_NR_TYPE = 0
+SHAPE_SUBJ_TOL_UPPER = { 2.0000e-002,  5.0000e-003}
+SHAPE_SUBJ_TOL_LOWER = { 2.0000e-002,  5.0000e-003}
+SHAPE_CONVERGED_LIMIT = { 1.0000e+002,  1.0000e-002}
+SHAPE_CONST_CORRECT = { }
+SHAPE_CONST_CORRECT_PROP = { }
+SHAPE_REDUCE_FLAG = 1
+$ Format: {Initial Value, Maximum Value, Minimum Value}
+SHAPE_NORMAL_FACT = { 5.0000e-002,  5.0000e-001,  5.0000e-003}
+SHAPE_ROBUST_FACT =  0.0000e+000
+$ Format: {Allowable Maximum Strain, Allowable Error Factor, Allowable Correcting Factor}
+SHAPE_MAX_STR = { 1.0000e-001,  9.5000e-001,  4.0960e+003}
+$ Format: {強度, 影響範囲, RBE3 強度, RBE3 感度係数}
+SHAPE_RESTRICT_INTENSITY = { 1.0000e+000,  1.0000e+000,  1.0000e+000,  1.0000e+000}
+SHAPE_RESTRICT_PROP_BOUND = 0
+SHAPE_RESTRICT_RBE3 = 1
+SHAPE_EXTRACT_MAX_FACT = { 3.0000e+001,  5.0000e-001}
+SHAPE_REMESH_FACT =  1.0000e-002
+SHAPE_REMESH_STEP =  { }
+SHAPE_REMESH_PROP =  { }
+
+$ **********************************************************
+$ トポロジー最適化専用パラメータ
+$ **********************************************************
+$ トポロジー密度変動制限
+$ Format: { {type, {property, ...}, coordinate or EID, length, extra_int, extra_double}, ...}
+TOPO_RESTRICT = {  }
+
+$ 型抜きトポロジー最適化の指定
+TOPO_DRAW_FLAG = 0
+TOPO_DRAW_BASE_COORD = 0
+TOPO_DRAW_ZOOM_NUM = 2
+TOPO_DRAW_SMOOTH_LENGTH =  0.0000e+000
+$ 抜き方向の指定
+$ Format: { {Coord ID, Negative(-1) or Positive(Default)  Direction, {Property ID, ...} }, ...}
+TOPO_DRAW = {  }
+
+$ トポロジー最適化のオプションパラメータ
+TOPO_CONST_SUBCASE = 0
+TOPO_CONV_TOL =  1.0000e-004
+TOPO_SUBJ_TOL_UPPER = { 2.0000e-002,  5.0000e-003}
+TOPO_SUBJ_TOL_LOWER = { 2.0000e-002,  5.0000e-003}
+TOPO_NR_MAX = {1, 1}
+TOPO_SEGMENTATION_FLAG = 1
+TOPO_INIT_MODIFICATION = 0
+TOPO_SMOOTH_FACT =  1.0000e+000
+TOPO_BETA_FLAG = 0
+TOPO_INIT_ZERO_PROP = { }
+TOPO_INIT_DENS_IT = -1
+TOPO_INIT_DENS_FILE = ""
+TOPO_MOVELIMIT =  0.0000e+000
+TOPO_BASE_THICKNESS = { }
+
+$ 固有振動数最大化における静剛性重み
+$ Format: { {Subcase ID, weight}, ...}
+TOPO_EIGEN_STIFF = { {1,  8.0000e-001},\
+                         {2,  8.0000e-001} }
+
+$ 細い部材の抑制機能
+$ Format: { {length, {property, ...} }, ...}
+TOPO_MIN_MEMBER_FILTER = {  }
+
+$ **********************************************************
+$ レベルセット法形状最適化専用パラメータ
+$ **********************************************************
+$ レベルセット法形状最適化の重要パラメータ
+LEVEL_SET_EFFECT_LENGTH =  0.00000e+000
+LEVEL_SET_CONST_SUBCASE = 0
+
+$ 形状変動制限
+$ Format: { {type, {property, ...}, coordinate, dimension}, ...}
+LEVEL_SET_RESTRICT = {  }
+
+$ レベルセット法形状最適化のオプションパラメータ
+LEVEL_SET_STL_THRESHOLD =  5.00000e-001
+LEVEL_SET_HOLE = {  }
+
+$ **********************************************************
+$ ビード最適化専用パラメータ
+$ **********************************************************
+$ ビード最適化の重要パラメータ
+BEAD_VARIABLE = {  }
+BEAD_INIT_HEIGHT_RATIO =  5.0000000e-001
+BEAD_CONST_SUBCASE = 0
+
+$ ビード最適化のオプションパラメータ
+BEAD_MOVELIMIT =  5.0000e-001
+BEAD_INIT_HEIGHT_FILE = ""
+BEAD_FUNC_METHOD = 1
+
+$ **********************************************************
+$ 出力ファイル
+$ **********************************************************
+$ FEM モデル (Nastran Bulk Data フォーマット)
+OUTPUT_BULK =  { }
+DISABLE_OUTPUT_BULK_DATA = {  }
+
+$ 解析，最適化結果 (Nastran OUTPUT2 フォーマット)
+OUTPUT_OP2 =   { }
+OUTPUT_SENSITIVITY = 1
+OUTPUT_SENSITIVITY_VECTOR = 0
+OUTPUT_EIGEN_MODE = 1
+OUTPUT_STRESS = 0
+OUTPUT_STRAIN = 0
+DISABLE_OUTPUT_PROP = { }
+
+$ そのほかのファイル
+OUTPUT_FEMAP = 
+OUTPUT_STL =   
+OUTPUT_IDEAS = 
+OUTPUT_DVGRID = 
+OUTPUT_ANSYS = 
+ANSYS_REFERENCE_FILE = ""
+
+OUTPUT_ALL_PARAM = 1
+
+PARAMETER_FORMAT_VERSION = 2018
+
+------------------
++-- Optimization Control Summary ---
+| Number of Objective Functions : 2
+| Number of Constraint Functions : 1
+| Number of Iterations : 50
++-----------------------------------
+03/31/20 23:31:55 : Reading bulk data file [bdf/new_point24.bdf] started.
+03/31/20 23:31:57 : Reading bulk data file [bdf/new_point24.bdf] finished.
+--- Bulk data summary ---
+Element : 29751
+    CHEXA : 29750
+    RBE2 : 1
+Node : 60372
+Material : 1
+    MAT1 : 1
+Property : 1
+    PSOLID : 1
+B.C. on node: 2115
+    SPC : 1406
+    MPC : 504
+    FORCE : 205
+B.C. on element : 0
+B.C. on model : 0
+Local coordinate system : 0
+Direct matrix input : 0
+Table : 0
+Frequency set : 0
+Subcase : 2
+Parameter : -1
+    GRDPNT    = -1
+    INREL     = 0
+    WTMASS    =  1.000e+000
+    G         =  0.000e+000
+    GFL       =  0.000e+000
+Rejected data : 0
+-------------------------
+03/31/20 23:31:57 : Data check ... OK.
+Available memory amount : 16000 [MBytes]
+Available thread number : 8
+03/31/20 23:31:59 : Initializing work arrays ... OK
+03/31/20 23:31:59 : === Initial step started ===
+03/31/20 23:32:00 : Static analysis [subcase1] started.
+Intel(R) MKL PARDISO: [Sym][202-524MB][Num][Tri][729MB]...finished.
+03/31/20 23:32:04 : Static analysis [subcase1] finished.
+03/31/20 23:32:04 : Sensitivity analysis started.
+03/31/20 23:32:06 : Sensitivity analysis finished.
+03/31/20 23:32:06 : Static analysis [subcase2] started.
+Intel(R) MKL PARDISO: [Sym][202-523MB][Num][Tri][714MB]...finished.
+03/31/20 23:32:11 : Static analysis [subcase2] finished.
+03/31/20 23:32:11 : Sensitivity analysis started.
+03/31/20 23:32:12 : Sensitivity analysis finished.
+03/31/20 23:32:13 : Writing bulk data file ... OK
+03/31/20 23:32:14 : === Initial step finished ===
++-- Objective/Constraint functions ---
+| Iteration number 0
+| Objective function [  1] :  5.0000000e+000 (100.000%)
+| Objective function [  2] :  2.5573712e+000 (100.000%)
+| Objective function [sum] :  1.0100000e+000 (100.000%)
+| Constraint function[  1] :  3.9999998e+004 (200.000%)
++---------------------------------------
+| More 16 min. 40 sec. will be needed.
++-------------------------------------
+03/31/20 23:32:14 : === Optimization step 1 started ===
+03/31/20 23:32:14 : Speed analysis started.
+03/31/20 23:32:18 : Speed analysis finished.
+03/31/20 23:32:18 : Topology Optimization started.
+03/31/20 23:32:22 : Topology Optimization finished.
+03/31/20 23:32:23 : Static analysis [subcase1] started.
+Intel(R) MKL PARDISO: [Sym][199-517MB][Num][Tri][683MB]...finished.
+03/31/20 23:32:28 : Static analysis [subcase1] finished.
+03/31/20 23:32:28 : Sensitivity analysis started.
+03/31/20 23:32:29 : Sensitivity analysis finished.
+03/31/20 23:32:29 : Static analysis [subcase2] started.
+Intel(R) MKL PARDISO: [Sym][199-517MB][Num][Tri][678MB]...finished.
+03/31/20 23:32:35 : Static analysis [subcase2] finished.
+03/31/20 23:32:35 : Sensitivity analysis started.
+03/31/20 23:32:36 : Sensitivity analysis finished.
+03/31/20 23:32:37 : Writing bulk data file ... OK
+03/31/20 23:32:37 : === Optimization step 1 finished ===
++-- Objective/Constraint functions ---
+| Iteration number 1
+| Objective function [  1] :  5.7915350e+000 (115.831%)
+| Objective function [  2] :  2.8221338e+000 (110.353%)
+| Objective function [sum] :  1.1693423e+000 (115.776%)
+| Constraint function[  1] :  3.7200035e+004 (186.000%)
++---------------------------------------
+| More 17 min. 33 sec. will be needed.
++-------------------------------------
+03/31/20 23:32:37 : === Optimization step 2 started ===
+03/31/20 23:32:37 : Speed analysis started.
+03/31/20 23:32:43 : Speed analysis finished.
+03/31/20 23:32:43 : Topology Optimization started.
+03/31/20 23:32:46 : Topology Optimization finished.
+03/31/20 23:32:47 : Static analysis [subcase1] started.
+Intel(R) MKL PARDISO: [Sym][199-518MB][Num][Tri][688MB]...finished.
+03/31/20 23:32:50 : Static analysis [subcase1] finished.
+03/31/20 23:32:50 : Sensitivity analysis started.
+03/31/20 23:32:52 : Sensitivity analysis finished.
+03/31/20 23:32:52 : Static analysis [subcase2] started.
+Intel(R) MKL PARDISO: [Sym][199-517MB][Num][Tri][686MB]...finished.
+03/31/20 23:32:55 : Static analysis [subcase2] finished.
+03/31/20 23:32:55 : Sensitivity analysis started.
+03/31/20 23:32:56 : Sensitivity analysis finished.
+03/31/20 23:32:57 : Writing bulk data file ... OK
+03/31/20 23:32:57 : === Optimization step 2 finished ===
++-- Objective/Constraint functions ---
+| Iteration number 2
+| Objective function [  1] :  6.8086629e+000 (136.173%)
+| Objective function [  2] :  3.8404600e+000 (150.172%)
+| Objective function [sum] :  1.3767498e+000 (136.312%)
+| Constraint function[  1] :  3.4651063e+004 (173.255%)
++---------------------------------------
+| More 16 min. 48 sec. will be needed.
++-------------------------------------
+03/31/20 23:32:57 : === Optimization step 3 started ===
+03/31/20 23:32:57 : Speed analysis started.
+03/31/20 23:33:03 : Speed analysis finished.
+03/31/20 23:33:03 : Topology Optimization started.
+03/31/20 23:33:05 : Topology Optimization finished.
+03/31/20 23:33:06 : Static analysis [subcase1] started.
+Intel(R) MKL PARDISO: [Sym][199-519MB][Num][Tri][669MB]...finished.
+03/31/20 23:33:10 : Static analysis [subcase1] finished.
+03/31/20 23:33:10 : Sensitivity analysis started.
+03/31/20 23:33:12 : Sensitivity analysis finished.
+03/31/20 23:33:12 : Static analysis [subcase2] started.
+Intel(R) MKL PARDISO: [Sym][199-518MB][Num][Tri][682MB]...finished.
+03/31/20 23:33:15 : Static analysis [subcase2] finished.
+03/31/20 23:33:15 : Sensitivity analysis started.
+03/31/20 23:33:16 : Sensitivity analysis finished.
+03/31/20 23:33:17 : Writing bulk data file ... OK
+03/31/20 23:33:17 : === Optimization step 3 finished ===
++-- Objective/Constraint functions ---
+| Iteration number 3
+| Objective function [  1] :  7.6641271e+000 (153.283%)
+| Objective function [  2] :  3.8147293e+000 (149.166%)
+| Objective function [sum] :  1.5477420e+000 (153.242%)
+| Constraint function[  1] :  3.2322797e+004 (161.614%)
++---------------------------------------
+| More 16 min. 15 sec. will be needed.
++-------------------------------------
+03/31/20 23:33:17 : === Optimization step 4 started ===
+03/31/20 23:33:17 : Speed analysis started.
+03/31/20 23:33:22 : Speed analysis finished.
+03/31/20 23:33:22 : Topology Optimization started.
+03/31/20 23:33:25 : Topology Optimization finished.
+03/31/20 23:33:25 : Static analysis [subcase1] started.
+Intel(R) MKL PARDISO: [Sym][199-518MB][Num][Tri][669MB]...finished.
+03/31/20 23:33:29 : Static analysis [subcase1] finished.
+03/31/20 23:33:29 : Sensitivity analysis started.
+03/31/20 23:33:30 : Sensitivity analysis finished.
+03/31/20 23:33:31 : Static analysis [subcase2] started.
+Intel(R) MKL PARDISO: [Sym][199-518MB][Num][Tri][673MB]...finished.
+03/31/20 23:33:35 : Static analysis [subcase2] finished.
+03/31/20 23:33:35 : Sensitivity analysis started.
+03/31/20 23:33:36 : Sensitivity analysis finished.
+03/31/20 23:33:37 : Writing bulk data file ... OK
+03/31/20 23:33:38 : === Optimization step 4 finished ===
++-- Objective/Constraint functions ---
+| Iteration number 4
+| Objective function [  1] :  8.7918996e+000 (175.838%)
+| Objective function [  2] :  4.2627606e+000 (166.685%)
+| Objective function [sum] :  1.7750485e+000 (175.747%)
+| Constraint function[  1] :  3.0190491e+004 (150.952%)
++---------------------------------------
+| More 15 min. 56 sec. will be needed.
++-------------------------------------
+03/31/20 23:33:38 : === Optimization step 5 started ===
+03/31/20 23:33:38 : Speed analysis started.
+03/31/20 23:33:42 : Speed analysis finished.
+03/31/20 23:33:42 : Topology Optimization started.
+03/31/20 23:33:45 : Topology Optimization finished.
+03/31/20 23:33:45 : Static analysis [subcase1] started.
+Intel(R) MKL PARDISO: [Sym][199-518MB][Num][Tri][668MB]...finished.
+03/31/20 23:33:49 : Static analysis [subcase1] finished.
+03/31/20 23:33:49 : Sensitivity analysis started.
+03/31/20 23:33:50 : Sensitivity analysis finished.
+03/31/20 23:33:50 : Static analysis [subcase2] started.
+Intel(R) MKL PARDISO: [Sym][199-517MB][Num][Tri][663MB]...finished.
+03/31/20 23:33:55 : Static analysis [subcase2] finished.
+03/31/20 23:33:55 : Sensitivity analysis started.
+03/31/20 23:33:56 : Sensitivity analysis finished.
+03/31/20 23:33:58 : Writing bulk data file ... OK
+03/31/20 23:33:58 : === Optimization step 5 finished ===
++-- Objective/Constraint functions ---
+| Iteration number 5
+| Objective function [  1] :  9.8565987e+000 (197.132%)
+| Objective function [  2] :  5.0699719e+000 (198.249%)
+| Objective function [sum] :  1.9911447e+000 (197.143%)
+| Constraint function[  1] :  2.8232659e+004 (141.163%)
++---------------------------------------
+| More 15 min. 30 sec. will be needed.
++-------------------------------------
+03/31/20 23:33:58 : === Optimization step 6 started ===
+03/31/20 23:33:58 : Speed analysis started.
+03/31/20 23:34:02 : Speed analysis finished.
+03/31/20 23:34:02 : Topology Optimization started.
+03/31/20 23:34:05 : Topology Optimization finished.
+03/31/20 23:34:06 : Static analysis [subcase1] started.
+Intel(R) MKL PARDISO: [Sym][199-518MB][Num][Tri][696MB]...finished.
+03/31/20 23:34:10 : Static analysis [subcase1] finished.
+03/31/20 23:34:10 : Sensitivity analysis started.
+03/31/20 23:34:12 : Sensitivity analysis finished.
+03/31/20 23:34:12 : Static analysis [subcase2] started.
+Intel(R) MKL PARDISO: [Sym][199-517MB][Num][Tri][682MB]...finished.
+03/31/20 23:34:16 : Static analysis [subcase2] finished.
+03/31/20 23:34:16 : Sensitivity analysis started.
+03/31/20 23:34:17 : Sensitivity analysis finished.
+03/31/20 23:34:18 : Writing bulk data file ... OK
+03/31/20 23:34:19 : === Optimization step 6 finished ===
++-- Objective/Constraint functions ---
+| Iteration number 6
+| Objective function [  1] :  1.0913168e+001 (218.263%)
+| Objective function [  2] :  6.2301411e+000 (243.615%)
+| Objective function [sum] :  2.2069951e+000 (218.514%)
+| Constraint function[  1] :  2.6430806e+004 (132.154%)
++---------------------------------------
+| More 15 min. 11 sec. will be needed.
++-------------------------------------
+03/31/20 23:34:19 : === Optimization step 7 started ===
+03/31/20 23:34:19 : Speed analysis started.
+03/31/20 23:34:23 : Speed analysis finished.
+03/31/20 23:34:23 : Topology Optimization started.
+03/31/20 23:34:26 : Topology Optimization finished.
+03/31/20 23:34:26 : Static analysis [subcase1] started.
+Intel(R) MKL PARDISO: [Sym][199-519MB][Num][Tri][693MB]...finished.
+03/31/20 23:34:31 : Static analysis [subcase1] finished.
+03/31/20 23:34:31 : Sensitivity analysis started.
+03/31/20 23:34:32 : Sensitivity analysis finished.
+03/31/20 23:34:32 : Static analysis [subcase2] started.
+Intel(R) MKL PARDISO: [Sym][199-520MB][Num][Tri][704MB]...finished.
+03/31/20 23:34:37 : Static analysis [subcase2] finished.
+03/31/20 23:34:37 : Sensitivity analysis started.
+03/31/20 23:34:38 : Sensitivity analysis finished.
+03/31/20 23:34:39 : Writing bulk data file ... OK
+03/31/20 23:34:40 : === Optimization step 7 finished ===
++-- Objective/Constraint functions ---
+| Iteration number 7
+| Objective function [  1] :  1.1879469e+001 (237.589%)
+| Objective function [  2] :  8.1844862e+000 (320.035%)
+| Objective function [sum] :  2.4078973e+000 (238.406%)
+| Constraint function[  1] :  2.4768963e+004 (123.845%)
++---------------------------------------
+| More 14 min. 52 sec. will be needed.
++-------------------------------------
+03/31/20 23:34:40 : === Optimization step 8 started ===
+03/31/20 23:34:40 : Speed analysis started.
+03/31/20 23:34:44 : Speed analysis finished.
+03/31/20 23:34:44 : Topology Optimization started.
+03/31/20 23:34:47 : Topology Optimization finished.
+03/31/20 23:34:47 : Static analysis [subcase1] started.
+Intel(R) MKL PARDISO: [Sym][200-518MB][Num][Tri][678MB]...finished.
+03/31/20 23:34:52 : Static analysis [subcase1] finished.
+03/31/20 23:34:52 : Sensitivity analysis started.
+03/31/20 23:34:53 : Sensitivity analysis finished.
+03/31/20 23:34:53 : Static analysis [subcase2] started.
+Intel(R) MKL PARDISO: [Sym][200-521MB][Num][Tri][696MB]...finished.
+03/31/20 23:34:58 : Static analysis [subcase2] finished.
+03/31/20 23:34:58 : Sensitivity analysis started.
+03/31/20 23:34:59 : Sensitivity analysis finished.
+03/31/20 23:35:00 : Writing bulk data file ... OK
+03/31/20 23:35:00 : === Optimization step 8 finished ===
++-- Objective/Constraint functions ---
+| Iteration number 8
+| Objective function [  1] :  1.2697881e+001 (253.958%)
+| Objective function [  2] :  1.2135838e+001 (474.543%)
+| Objective function [sum] :  2.5870305e+000 (256.142%)
+| Constraint function[  1] :  2.3233155e+004 (116.166%)
++---------------------------------------
+| More 14 min. 28 sec. will be needed.
++-------------------------------------
+03/31/20 23:35:00 : === Optimization step 9 started ===
+03/31/20 23:35:00 : Speed analysis started.
+03/31/20 23:35:03 : Speed analysis finished.
+03/31/20 23:35:03 : Topology Optimization started.
+03/31/20 23:35:06 : Topology Optimization finished.
+03/31/20 23:35:07 : Static analysis [subcase1] started.
+Intel(R) MKL PARDISO: [Sym][200-518MB][Num][Tri][678MB]...finished.
+03/31/20 23:35:12 : Static analysis [subcase1] finished.
+03/31/20 23:35:12 : Sensitivity analysis started.
+03/31/20 23:35:13 : Sensitivity analysis finished.
+03/31/20 23:35:13 : Static analysis [subcase2] started.
+Intel(R) MKL PARDISO: [Sym][199-518MB][Num][Tri][683MB]...finished.
+03/31/20 23:35:18 : Static analysis [subcase2] finished.
+03/31/20 23:35:18 : Sensitivity analysis started.
+03/31/20 23:35:20 : Sensitivity analysis finished.
+03/31/20 23:35:20 : Writing bulk data file ... OK
+03/31/20 23:35:21 : === Optimization step 9 finished ===
++-- Objective/Constraint functions ---
+| Iteration number 9
+| Objective function [  1] :  1.3319724e+001 (266.394%)
+| Objective function [  2] :  2.4794696e+001 (969.538%)
+| Objective function [sum] :  2.7608986e+000 (273.356%)
+| Constraint function[  1] :  2.1811361e+004 (109.057%)
++---------------------------------------
+| More 14 min. 8 sec. will be needed.
++-------------------------------------
+03/31/20 23:35:21 : === Optimization step 10 started ===
+03/31/20 23:35:21 : Speed analysis started.
+03/31/20 23:35:25 : Speed analysis finished.
+03/31/20 23:35:25 : Topology Optimization started.
+03/31/20 23:35:28 : Topology Optimization finished.
+03/31/20 23:35:29 : Static analysis [subcase1] started.
+Intel(R) MKL PARDISO: [Sym][200-520MB][Num][Tri][685MB]...finished.
+03/31/20 23:35:33 : Static analysis [subcase1] finished.
+03/31/20 23:35:33 : Sensitivity analysis started.
+03/31/20 23:35:35 : Sensitivity analysis finished.
+03/31/20 23:35:35 : Static analysis [subcase2] started.
+Intel(R) MKL PARDISO: [Sym][200-520MB][Num][Tri][695MB]...finished.
+03/31/20 23:35:40 : Static analysis [subcase2] finished.
+03/31/20 23:35:40 : Sensitivity analysis started.
+03/31/20 23:35:41 : Sensitivity analysis finished.
+03/31/20 23:35:42 : Writing bulk data file ... OK
+03/31/20 23:35:42 : === Optimization step 10 finished ===
++-- Objective/Constraint functions ---
+| Iteration number 10
+| Objective function [  1] :  1.3726960e+001 (274.539%)
+| Objective function [  2] :  7.9801227e+002 (31204.398%)
+| Objective function [sum] :  5.8658318e+000 (580.775%)
+| Constraint function[  1] :  2.0492852e+004 (102.464%)
++---------------------------------------
+| More 13 min. 49 sec. will be needed.
++-------------------------------------
+03/31/20 23:35:42 : === Optimization step 11 started ===
+03/31/20 23:35:42 : Speed analysis started.
+03/31/20 23:35:46 : Speed analysis finished.
+03/31/20 23:35:46 : Topology Optimization started.
+03/31/20 23:35:49 : Topology Optimization finished.
+03/31/20 23:35:49 : Static analysis [subcase1] started.
+Intel(R) MKL PARDISO: [Sym][200-519MB][Num][Tri][676MB]...finished.
+03/31/20 23:35:54 : Static analysis [subcase1] finished.
+03/31/20 23:35:54 : Sensitivity analysis started.
+03/31/20 23:35:56 : Sensitivity analysis finished.
+03/31/20 23:35:56 : Static analysis [subcase2] started.
+Intel(R) MKL PARDISO: [Sym][200-518MB][Num][Tri][707MB]...finished.
+03/31/20 23:36:01 : Static analysis [subcase2] finished.
+03/31/20 23:36:01 : Sensitivity analysis started.
+03/31/20 23:36:02 : Sensitivity analysis finished.
+03/31/20 23:36:03 : Writing bulk data file ... OK
+03/31/20 23:36:03 : === Optimization step 11 finished ===
++-- Objective/Constraint functions ---
+| Iteration number 11
+| Objective function [  1] :  1.4730271e+001 (294.605%)
+| Objective function [  2] :  1.0007675e+003 (39132.665%)
+| Objective function [sum] :  6.8593206e+000 (679.141%)
+| Constraint function[  1] :  1.9999999e+004 (100.000%)
++---------------------------------------
+| More 13 min. 29 sec. will be needed.
++-------------------------------------
+03/31/20 23:36:03 : === Optimization step 12 started ===
+03/31/20 23:36:03 : Speed analysis started.
+03/31/20 23:36:08 : Speed analysis finished.
+03/31/20 23:36:08 : Topology Optimization started.
+03/31/20 23:36:10 : Topology Optimization finished.
+03/31/20 23:36:10 : Static analysis [subcase1] started.
+Intel(R) MKL PARDISO: [Sym][200-519MB][Num][Tri][714MB]...finished.
+03/31/20 23:36:15 : Static analysis [subcase1] finished.
+03/31/20 23:36:15 : Sensitivity analysis started.
+03/31/20 23:36:16 : Sensitivity analysis finished.
+03/31/20 23:36:17 : Static analysis [subcase2] started.
+Intel(R) MKL PARDISO: [Sym][200-518MB][Num][Tri][693MB]...finished.
+03/31/20 23:36:21 : Static analysis [subcase2] finished.
+03/31/20 23:36:21 : Sensitivity analysis started.
+03/31/20 23:36:23 : Sensitivity analysis finished.
+03/31/20 23:36:24 : Writing bulk data file ... OK
+03/31/20 23:36:24 : === Optimization step 12 finished ===
++-- Objective/Constraint functions ---
+| Iteration number 12
+| Objective function [  1] :  1.5563046e+001 (311.261%)
+| Objective function [  2] :  2.0713644e+002 (8099.585%)
+| Objective function [sum] :  3.9225677e+000 (388.373%)
+| Constraint function[  1] :  1.9999999e+004 (100.000%)
++---------------------------------------
+| More 13 min. 9 sec. will be needed.
++-------------------------------------
+03/31/20 23:36:24 : === Optimization step 13 started ===
+03/31/20 23:36:24 : Speed analysis started.
+03/31/20 23:36:30 : Speed analysis finished.
+03/31/20 23:36:30 : Topology Optimization started.
+03/31/20 23:36:32 : Topology Optimization finished.
+03/31/20 23:36:33 : Static analysis [subcase1] started.
+Intel(R) MKL PARDISO: [Sym][200-522MB][Num][Tri][726MB]...finished.
+03/31/20 23:36:37 : Static analysis [subcase1] finished.
+03/31/20 23:36:37 : Sensitivity analysis started.
+03/31/20 23:36:39 : Sensitivity analysis finished.
+03/31/20 23:36:39 : Static analysis [subcase2] started.
+Intel(R) MKL PARDISO: [Sym][200-517MB][Num][Tri][688MB]...finished.
+03/31/20 23:36:42 : Static analysis [subcase2] finished.
+03/31/20 23:36:42 : Sensitivity analysis started.
+03/31/20 23:36:44 : Sensitivity analysis finished.
+03/31/20 23:36:44 : Writing bulk data file ... OK
+03/31/20 23:36:45 : === Optimization step 13 finished ===
++-- Objective/Constraint functions ---
+| Iteration number 13
+| Objective function [  1] :  1.6257124e+001 (325.142%)
+| Objective function [  2] :  5.8176041e+001 (2274.838%)
+| Objective function [sum] :  3.4789086e+000 (344.446%)
+| Constraint function[  1] :  1.9999999e+004 (100.000%)
++---------------------------------------
+| More 12 min. 49 sec. will be needed.
++-------------------------------------
+03/31/20 23:36:45 : === Optimization step 14 started ===
+03/31/20 23:36:45 : Speed analysis started.
+03/31/20 23:36:48 : Speed analysis finished.
+03/31/20 23:36:48 : Topology Optimization started.
+03/31/20 23:36:49 : Topology Optimization finished.
+03/31/20 23:36:50 : Static analysis [subcase1] started.
+Intel(R) MKL PARDISO: [Sym][200-520MB][Num][Tri][720MB]...finished.
+03/31/20 23:36:53 : Static analysis [subcase1] finished.
+03/31/20 23:36:53 : Sensitivity analysis started.
+03/31/20 23:36:54 : Sensitivity analysis finished.
+03/31/20 23:36:54 : Static analysis [subcase2] started.
+Intel(R) MKL PARDISO: [Sym][200-518MB][Num][Tri][717MB]...finished.
+03/31/20 23:36:57 : Static analysis [subcase2] finished.
+03/31/20 23:36:57 : Sensitivity analysis started.
+03/31/20 23:36:58 : Sensitivity analysis finished.
+03/31/20 23:36:59 : Writing bulk data file ... OK
+03/31/20 23:36:59 : === Optimization step 14 finished ===
++-- Objective/Constraint functions ---
+| Iteration number 14
+| Objective function [  1] :  1.5653417e+001 (313.068%)
+| Objective function [  2] :  5.5765753e+001 (2180.589%)
+| Objective function [sum] :  3.3487423e+000 (331.559%)
+| Constraint function[  1] :  1.9999998e+004 (100.000%)
++---------------------------------------
+| More 12 min. 12 sec. will be needed.
++-------------------------------------
+03/31/20 23:36:59 : === Optimization step 15 started ===
+03/31/20 23:36:59 : Speed analysis started.
+03/31/20 23:37:02 : Speed analysis finished.
+03/31/20 23:37:02 : Topology Optimization started.
+03/31/20 23:37:04 : Topology Optimization finished.
+03/31/20 23:37:04 : Static analysis [subcase1] started.
+Intel(R) MKL PARDISO: [Sym][201-519MB][Num][Tri][709MB]...finished.
+03/31/20 23:37:07 : Static analysis [subcase1] finished.
+03/31/20 23:37:07 : Sensitivity analysis started.
+03/31/20 23:37:09 : Sensitivity analysis finished.
+03/31/20 23:37:09 : Static analysis [subcase2] started.
+Intel(R) MKL PARDISO: [Sym][200-519MB][Num][Tri][713MB]...finished.
+03/31/20 23:37:12 : Static analysis [subcase2] finished.
+03/31/20 23:37:12 : Sensitivity analysis started.
+03/31/20 23:37:13 : Sensitivity analysis finished.
+03/31/20 23:37:14 : Writing bulk data file ... OK
+03/31/20 23:37:14 : === Optimization step 15 finished ===
++-- Objective/Constraint functions ---
+| Iteration number 15
+| Objective function [  1] :  1.4972445e+001 (299.449%)
+| Objective function [  2] :  6.1678833e+001 (2411.806%)
+| Objective function [sum] :  3.2356696e+000 (320.363%)
+| Constraint function[  1] :  2.0000001e+004 (100.000%)
++---------------------------------------
+| More 11 min. 40 sec. will be needed.
++-------------------------------------
+03/31/20 23:37:14 : === Optimization step 16 started ===
+03/31/20 23:37:14 : Speed analysis started.
+03/31/20 23:37:17 : Speed analysis finished.
+03/31/20 23:37:17 : Topology Optimization started.
+03/31/20 23:37:19 : Topology Optimization finished.
+03/31/20 23:37:19 : Static analysis [subcase1] started.
+Intel(R) MKL PARDISO: [Sym][201-520MB][Num][Tri][690MB]...finished.
+03/31/20 23:37:22 : Static analysis [subcase1] finished.
+03/31/20 23:37:22 : Sensitivity analysis started.
+03/31/20 23:37:23 : Sensitivity analysis finished.
+03/31/20 23:37:23 : Static analysis [subcase2] started.
+Intel(R) MKL PARDISO: [Sym][201-520MB][Num][Tri][724MB]...finished.
+03/31/20 23:37:26 : Static analysis [subcase2] finished.
+03/31/20 23:37:26 : Sensitivity analysis started.
+03/31/20 23:37:28 : Sensitivity analysis finished.
+03/31/20 23:37:29 : Writing bulk data file ... OK
+03/31/20 23:37:29 : === Optimization step 16 finished ===
++-- Objective/Constraint functions ---
+| Iteration number 16
+| Objective function [  1] :  1.4515466e+001 (290.309%)
+| Objective function [  2] :  5.5511946e+001 (2170.664%)
+| Objective function [sum] :  3.1201597e+000 (308.927%)
+| Constraint function[  1] :  1.9999998e+004 (100.000%)
++---------------------------------------
+| More 11 min. 10 sec. will be needed.
++-------------------------------------
+03/31/20 23:37:29 : === Optimization step 17 started ===
+03/31/20 23:37:29 : Speed analysis started.
+03/31/20 23:37:32 : Speed analysis finished.
+03/31/20 23:37:32 : Topology Optimization started.
+03/31/20 23:37:34 : Topology Optimization finished.
+03/31/20 23:37:34 : Static analysis [subcase1] started.
+Intel(R) MKL PARDISO: [Sym][201-521MB][Num][Tri][720MB]...finished.
+03/31/20 23:37:38 : Static analysis [subcase1] finished.
+03/31/20 23:37:38 : Sensitivity analysis started.
+03/31/20 23:37:39 : Sensitivity analysis finished.
+03/31/20 23:37:39 : Static analysis [subcase2] started.
+Intel(R) MKL PARDISO: [Sym][201-521MB][Num][Tri][730MB]...finished.
+03/31/20 23:37:42 : Static analysis [subcase2] finished.
+03/31/20 23:37:42 : Sensitivity analysis started.
+03/31/20 23:37:43 : Sensitivity analysis finished.
+03/31/20 23:37:44 : Writing bulk data file ... OK
+03/31/20 23:37:44 : === Optimization step 17 finished ===
++-- Objective/Constraint functions ---
+| Iteration number 17
+| Objective function [  1] :  1.4187054e+001 (283.741%)
+| Objective function [  2] :  7.3983002e+001 (2892.932%)
+| Objective function [sum] :  3.1267041e+000 (309.575%)
+| Constraint function[  1] :  1.9999999e+004 (100.000%)
++---------------------------------------
+| More 10 min. 41 sec. will be needed.
++-------------------------------------
+03/31/20 23:37:44 : === Optimization step 18 started ===
+03/31/20 23:37:44 : Speed analysis started.
+03/31/20 23:37:47 : Speed analysis finished.
+03/31/20 23:37:47 : Topology Optimization started.
+03/31/20 23:37:49 : Topology Optimization finished.
+03/31/20 23:37:49 : Static analysis [subcase1] started.
+Intel(R) MKL PARDISO: [Sym][202-522MB][Num][Tri][726MB]...finished.
+03/31/20 23:37:53 : Static analysis [subcase1] finished.
+03/31/20 23:37:53 : Sensitivity analysis started.
+03/31/20 23:37:54 : Sensitivity analysis finished.
+03/31/20 23:37:54 : Static analysis [subcase2] started.
+Intel(R) MKL PARDISO: [Sym][202-526MB][Num][Tri][750MB]...finished.
+03/31/20 23:37:57 : Static analysis [subcase2] finished.
+03/31/20 23:37:57 : Sensitivity analysis started.
+03/31/20 23:37:58 : Sensitivity analysis finished.
+03/31/20 23:37:59 : Writing bulk data file ... OK
+03/31/20 23:37:59 : === Optimization step 18 finished ===
++-- Objective/Constraint functions ---
+| Iteration number 18
+| Objective function [  1] :  1.4226794e+001 (284.536%)
+| Objective function [  2] :  6.2495329e+001 (2443.733%)
+| Objective function [sum] :  3.0897321e+000 (305.914%)
+| Constraint function[  1] :  1.9999999e+004 (100.000%)
++---------------------------------------
+| More 10 min. 14 sec. will be needed.
++-------------------------------------
+03/31/20 23:37:59 : === Optimization step 19 started ===
+03/31/20 23:37:59 : Speed analysis started.
+03/31/20 23:38:02 : Speed analysis finished.
+03/31/20 23:38:02 : Topology Optimization started.
+03/31/20 23:38:04 : Topology Optimization finished.
+03/31/20 23:38:05 : Static analysis [subcase1] started.
+Intel(R) MKL PARDISO: [Sym][201-521MB][Num][Tri][726MB]...finished.
+03/31/20 23:38:08 : Static analysis [subcase1] finished.
+03/31/20 23:38:08 : Sensitivity analysis started.
+03/31/20 23:38:09 : Sensitivity analysis finished.
+03/31/20 23:38:10 : Static analysis [subcase2] started.
+Intel(R) MKL PARDISO: [Sym][201-521MB][Num][Tri][715MB]...finished.
+03/31/20 23:38:13 : Static analysis [subcase2] finished.
+03/31/20 23:38:13 : Sensitivity analysis started.
+03/31/20 23:38:14 : Sensitivity analysis finished.
+03/31/20 23:38:14 : Writing bulk data file ... OK
+03/31/20 23:38:15 : === Optimization step 19 finished ===
++-- Objective/Constraint functions ---
+| Iteration number 19
+| Objective function [  1] :  1.4157452e+001 (283.149%)
+| Objective function [  2] :  4.7700970e+001 (1865.235%)
+| Objective function [sum] :  3.0180138e+000 (298.813%)
+| Constraint function[  1] :  1.9999999e+004 (100.000%)
++---------------------------------------
+| More 9 min. 50 sec. will be needed.
++-------------------------------------
+03/31/20 23:38:15 : === Optimization step 20 started ===
+03/31/20 23:38:15 : Speed analysis started...
+03/31/20 23:38:19 : Speed analysis finished.
+03/31/20 23:38:19 : Topology Optimization started.
+03/31/20 23:38:21 : Topology Optimization finished.
+03/31/20 23:38:21 : Static analysis [subcase1] started.
+Intel(R) MKL PARDISO: [Sym][202-523MB][Num][Tri][727MB]...finished.
+03/31/20 23:38:24 : Static analysis [subcase1] finished.
+03/31/20 23:38:24 : Sensitivity analysis started.
+03/31/20 23:38:25 : Sensitivity analysis finished.
+03/31/20 23:38:25 : Static analysis [subcase2] started.
+Intel(R) MKL PARDISO: [Sym][201-521MB][Num][Tri][701MB]...finished.
+03/31/20 23:38:27 : Static analysis [subcase2] finished.
+03/31/20 23:38:27 : Sensitivity analysis started.
+03/31/20 23:38:28 : Sensitivity analysis finished.
+03/31/20 23:38:29 : Writing bulk data file ... OK
+03/31/20 23:38:30 : === Optimization step 20 finished ===
++-- Objective/Constraint functions ---
+| Iteration number 20
+| Objective function [  1] :  1.4081481e+001 (281.630%)
+| Objective function [  2] :  4.8738719e+001 (1905.813%)
+| Objective function [sum] :  3.0068775e+000 (297.711%)
+| Constraint function[  1] :  1.9999999e+004 (100.000%)
++---------------------------------------
+| More 9 min. 25 sec. will be needed.
++-------------------------------------
+03/31/20 23:38:30 : === Optimization step 21 started ===
+03/31/20 23:38:30 : Speed analysis started...
+03/31/20 23:38:34 : Speed analysis finished.
+03/31/20 23:38:34 : Topology Optimization started.
+03/31/20 23:38:36 : Topology Optimization finished.
+03/31/20 23:38:36 : Static analysis [subcase1] started.
+Intel(R) MKL PARDISO: [Sym][202-523MB][Num][Tri][708MB]...finished.
+03/31/20 23:38:39 : Static analysis [subcase1] finished.
+03/31/20 23:38:39 : Sensitivity analysis started.
+03/31/20 23:38:40 : Sensitivity analysis finished.
+03/31/20 23:38:40 : Static analysis [subcase2] started.
+Intel(R) MKL PARDISO: [Sym][201-522MB][Num][Tri][707MB]...finished.
+03/31/20 23:38:43 : Static analysis [subcase2] finished.
+03/31/20 23:38:43 : Sensitivity analysis started.
+03/31/20 23:38:44 : Sensitivity analysis finished.
+03/31/20 23:38:44 : Writing bulk data file ... OK
+----------------------------------------
+Object[  1]  1.4040177e+001 (280.804%)
+Object[  2]  6.5305780e+001 (2553.629%)
+Object[sum]  3.0633984e+000 (303.307%)
+Const [  1]  1.9999998e+004 (100.000%)
+----------------------------------------
+03/31/20 23:38:45 : Topology Optimization started.
+03/31/20 23:38:47 : Topology Optimization finished.
+03/31/20 23:38:47 : Static analysis [subcase1] started.
+Intel(R) MKL PARDISO: [Sym][202-523MB][Num][Tri][719MB]...finished.
+03/31/20 23:38:51 : Static analysis [subcase1] finished.
+03/31/20 23:38:51 : Sensitivity analysis started.
+03/31/20 23:38:52 : Sensitivity analysis finished.
+03/31/20 23:38:52 : Static analysis [subcase2] started.
+Intel(R) MKL PARDISO: [Sym][201-522MB][Num][Tri][741MB]...finished.
+03/31/20 23:38:55 : Static analysis [subcase2] finished.
+03/31/20 23:38:55 : Sensitivity analysis started.
+03/31/20 23:38:56 : Sensitivity analysis finished.
+03/31/20 23:38:56 : Writing bulk data file ... OK
+03/31/20 23:38:56 : === Optimization step 21 finished ===
++-- Objective/Constraint functions ---
+| Iteration number 21
+| Objective function [  1] :  1.4035779e+001 (280.716%)
+| Objective function [  2] :  4.7861735e+001 (1871.521%)
+| Objective function [sum] :  2.9943079e+000 (296.466%)
+| Constraint function[  1] :  1.9999999e+004 (100.000%)
++---------------------------------------
+| More 9 min. 16 sec. will be needed.
++-------------------------------------
+03/31/20 23:38:56 : === Optimization step 22 started ===
+03/31/20 23:38:56 : Speed analysis started.
+03/31/20 23:39:00 : Speed analysis finished.
+03/31/20 23:39:00 : Topology Optimization started.
+03/31/20 23:39:01 : Topology Optimization finished.
+03/31/20 23:39:02 : Static analysis [subcase1] started.
+Intel(R) MKL PARDISO: [Sym][202-524MB][Num][Tri][748MB]...finished.
+03/31/20 23:39:05 : Static analysis [subcase1] finished.
+03/31/20 23:39:05 : Sensitivity analysis started.
+03/31/20 23:39:07 : Sensitivity analysis finished.
+03/31/20 23:39:07 : Static analysis [subcase2] started.
+Intel(R) MKL PARDISO: [Sym][202-522MB][Num][Tri][717MB]...finished.
+03/31/20 23:39:10 : Static analysis [subcase2] finished.
+03/31/20 23:39:10 : Sensitivity analysis started.
+03/31/20 23:39:10 : Sensitivity analysis finished.
+03/31/20 23:39:11 : Writing bulk data file ... OK
+03/31/20 23:39:11 : === Optimization step 22 finished ===
++-- Objective/Constraint functions ---
+| Iteration number 22
+| Objective function [  1] :  1.3960313e+001 (279.206%)
+| Objective function [  2] :  4.5971805e+001 (1797.620%)
+| Objective function [sum] :  2.9718246e+000 (294.240%)
+| Constraint function[  1] :  1.9999999e+004 (100.000%)
++---------------------------------------
+| More 8 min. 52 sec. will be needed.
++-------------------------------------
+03/31/20 23:39:11 : === Optimization step 23 started ===
+03/31/20 23:39:11 : Speed analysis started...
+03/31/20 23:39:14 : Speed analysis finished.
+03/31/20 23:39:14 : Topology Optimization started.
+03/31/20 23:39:16 : Topology Optimization finished.
+03/31/20 23:39:17 : Static analysis [subcase1] started.
+Intel(R) MKL PARDISO: [Sym][202-523MB][Num][Tri][747MB]...finished.
+03/31/20 23:39:20 : Static analysis [subcase1] finished.
+03/31/20 23:39:20 : Sensitivity analysis started.
+03/31/20 23:39:21 : Sensitivity analysis finished.
+03/31/20 23:39:21 : Static analysis [subcase2] started.
+Intel(R) MKL PARDISO: [Sym][202-526MB][Num][Tri][736MB]...finished.
+03/31/20 23:39:24 : Static analysis [subcase2] finished.
+03/31/20 23:39:24 : Sensitivity analysis started.
+03/31/20 23:39:25 : Sensitivity analysis finished.
+03/31/20 23:39:26 : Writing bulk data file ... OK
+03/31/20 23:39:27 : === Optimization step 23 finished ===
++-- Objective/Constraint functions ---
+| Iteration number 23
+| Objective function [  1] :  1.3922869e+001 (278.457%)
+| Objective function [  2] :  4.2214001e+001 (1650.680%)
+| Objective function [sum] :  2.9496417e+000 (292.044%)
+| Constraint function[  1] :  1.9999999e+004 (100.000%)
++---------------------------------------
+| More 8 min. 29 sec. will be needed.
++-------------------------------------
+03/31/20 23:39:27 : === Optimization step 24 started ===
+03/31/20 23:39:27 : Speed analysis started...
+03/31/20 23:39:31 : Speed analysis finished.
+03/31/20 23:39:31 : Topology Optimization started.
+03/31/20 23:39:33 : Topology Optimization finished.
+03/31/20 23:39:33 : Static analysis [subcase1] started.
+Intel(R) MKL PARDISO: [Sym][202-524MB][Num][Tri][719MB]...finished.
+03/31/20 23:39:36 : Static analysis [subcase1] finished.
+03/31/20 23:39:36 : Sensitivity analysis started.
+03/31/20 23:39:37 : Sensitivity analysis finished.
+03/31/20 23:39:37 : Static analysis [subcase2] started.
+Intel(R) MKL PARDISO: [Sym][202-525MB][Num][Tri][721MB]...finished.
+03/31/20 23:39:40 : Static analysis [subcase2] finished.
+03/31/20 23:39:40 : Sensitivity analysis started.
+03/31/20 23:39:41 : Sensitivity analysis finished.
+03/31/20 23:39:42 : Writing bulk data file ... OK
+03/31/20 23:39:42 : === Optimization step 24 finished ===
++-- Objective/Constraint functions ---
+| Iteration number 24
+| Objective function [  1] :  1.3893084e+001 (277.862%)
+| Objective function [  2] :  4.1161379e+001 (1609.519%)
+| Objective function [sum] :  2.9395687e+000 (291.046%)
+| Constraint function[  1] :  1.9999999e+004 (100.000%)
++---------------------------------------
+| More 8 min. 6 sec. will be needed.
++-------------------------------------
+03/31/20 23:39:42 : === Optimization step 25 started ===
+03/31/20 23:39:42 : Speed analysis started.
+03/31/20 23:39:47 : Speed analysis finished.
+03/31/20 23:39:47 : Topology Optimization started.
+03/31/20 23:39:48 : Topology Optimization finished.
+03/31/20 23:39:48 : Static analysis [subcase1] started.
+Intel(R) MKL PARDISO: [Sym][202-522MB][Num][Tri][746MB]...finished.
+03/31/20 23:39:51 : Static analysis [subcase1] finished.
+03/31/20 23:39:51 : Sensitivity analysis started.
+03/31/20 23:39:52 : Sensitivity analysis finished.
+03/31/20 23:39:52 : Static analysis [subcase2] started.
+Intel(R) MKL PARDISO: [Sym][202-521MB][Num][Tri][745MB]...finished.
+03/31/20 23:39:55 : Static analysis [subcase2] finished.
+03/31/20 23:39:55 : Sensitivity analysis started.
+03/31/20 23:39:56 : Sensitivity analysis finished.
+03/31/20 23:39:57 : Writing bulk data file ... OK
+03/31/20 23:39:57 : === Optimization step 25 finished ===
++-- Objective/Constraint functions ---
+| Iteration number 25
+| Objective function [  1] :  1.3869915e+001 (277.398%)
+| Objective function [  2] :  3.8548569e+001 (1507.351%)
+| Objective function [sum] :  2.9247181e+000 (289.576%)
+| Constraint function[  1] :  1.9999999e+004 (100.000%)
++---------------------------------------
+| More 7 min. 44 sec. will be needed.
++-------------------------------------
+03/31/20 23:39:57 : === Optimization step 26 started ===
+03/31/20 23:39:57 : Speed analysis started...
+03/31/20 23:40:02 : Speed analysis finished.
+03/31/20 23:40:02 : Topology Optimization started.
+03/31/20 23:40:04 : Topology Optimization finished.
+03/31/20 23:40:04 : Static analysis [subcase1] started.
+Intel(R) MKL PARDISO: [Sym][202-525MB][Num][Tri][705MB]...finished.
+03/31/20 23:40:07 : Static analysis [subcase1] finished.
+03/31/20 23:40:07 : Sensitivity analysis started.
+03/31/20 23:40:07 : Sensitivity analysis finished.
+03/31/20 23:40:08 : Static analysis [subcase2] started.
+Intel(R) MKL PARDISO: [Sym][202-523MB][Num][Tri][727MB]...finished.
+03/31/20 23:40:10 : Static analysis [subcase2] finished.
+03/31/20 23:40:10 : Sensitivity analysis started.
+03/31/20 23:40:11 : Sensitivity analysis finished.
+03/31/20 23:40:12 : Writing bulk data file ... OK
+----------------------------------------
+Object[  1]  1.3806846e+001 (276.137%)
+Object[  2]  5.2788357e+001 (2064.165%)
+Object[sum]  2.9677857e+000 (293.840%)
+Const [  1]  1.9999999e+004 (100.000%)
+----------------------------------------
+03/31/20 23:40:12 : Topology Optimization started.
+03/31/20 23:40:14 : Topology Optimization finished.
+03/31/20 23:40:15 : Static analysis [subcase1] started.
+Intel(R) MKL PARDISO: [Sym][202-524MB][Num][Tri][748MB]...finished.
+03/31/20 23:40:18 : Static analysis [subcase1] finished.
+03/31/20 23:40:18 : Sensitivity analysis started.
+03/31/20 23:40:19 : Sensitivity analysis finished.
+03/31/20 23:40:19 : Static analysis [subcase2] started.
+Intel(R) MKL PARDISO: [Sym][202-523MB][Num][Tri][752MB]...finished.
+03/31/20 23:40:22 : Static analysis [subcase2] finished.
+03/31/20 23:40:22 : Sensitivity analysis started.
+03/31/20 23:40:23 : Sensitivity analysis finished.
+03/31/20 23:40:24 : Writing bulk data file ... OK
+03/31/20 23:40:24 : === Optimization step 26 finished ===
++-- Objective/Constraint functions ---
+| Iteration number 26
+| Objective function [  1] :  1.3828618e+001 (276.572%)
+| Objective function [  2] :  3.6848566e+001 (1440.877%)
+| Objective function [sum] :  2.9098113e+000 (288.100%)
+| Constraint function[  1] :  1.9999999e+004 (100.000%)
++---------------------------------------
+| More 7 min. 33 sec. will be needed.
++-------------------------------------
+03/31/20 23:40:24 : === Optimization step 27 started ===
+03/31/20 23:40:24 : Speed analysis started...
+03/31/20 23:40:27 : Speed analysis finished.
+03/31/20 23:40:27 : Topology Optimization started.
+03/31/20 23:40:28 : Topology Optimization finished.
+03/31/20 23:40:29 : Static analysis [subcase1] started.
+Intel(R) MKL PARDISO: [Sym][202-523MB][Num][Tri][713MB]...finished.
+03/31/20 23:40:32 : Static analysis [subcase1] finished.
+03/31/20 23:40:32 : Sensitivity analysis started.
+03/31/20 23:40:33 : Sensitivity analysis finished.
+03/31/20 23:40:33 : Static analysis [subcase2] started.
+Intel(R) MKL PARDISO: [Sym][202-522MB][Num][Tri][740MB]...finished.
+03/31/20 23:40:37 : Static analysis [subcase2] finished.
+03/31/20 23:40:37 : Sensitivity analysis started.
+03/31/20 23:40:38 : Sensitivity analysis finished.
+03/31/20 23:40:38 : Writing bulk data file ... OK
+----------------------------------------
+Object[  1]  1.3788620e+001 (275.772%)
+Object[  2]  4.2330075e+001 (1655.218%)
+Object[sum]  2.9232459e+000 (289.430%)
+Const [  1]  1.9999997e+004 (100.000%)
+----------------------------------------
+03/31/20 23:40:38 : Topology Optimization started.
+03/31/20 23:40:40 : Topology Optimization finished.
+03/31/20 23:40:41 : Static analysis [subcase1] started.
+Intel(R) MKL PARDISO: [Sym][202-528MB][Num][Tri][737MB]...finished.
+03/31/20 23:40:44 : Static analysis [subcase1] finished.
+03/31/20 23:40:44 : Sensitivity analysis started.
+03/31/20 23:40:45 : Sensitivity analysis finished.
+03/31/20 23:40:46 : Static analysis [subcase2] started.
+Intel(R) MKL PARDISO: [Sym][202-522MB][Num][Tri][732MB]...finished.
+03/31/20 23:40:49 : Static analysis [subcase2] finished.
+03/31/20 23:40:49 : Sensitivity analysis started.
+03/31/20 23:40:50 : Sensitivity analysis finished.
+03/31/20 23:40:50 : Writing bulk data file ... OK
+03/31/20 23:40:50 : === Optimization step 27 finished ===
++-- Objective/Constraint functions ---
+| Iteration number 27
+| Objective function [  1] :  1.3802430e+001 (276.049%)
+| Objective function [  2] :  3.5608318e+001 (1392.380%)
+| Objective function [sum] :  2.8997239e+000 (287.101%)
+| Constraint function[  1] :  1.9999998e+004 (100.000%)
++---------------------------------------
+| More 7 min. 20 sec. will be needed.
++-------------------------------------
+03/31/20 23:40:50 : === Optimization step 28 started ===
+03/31/20 23:40:50 : Speed analysis started.
+03/31/20 23:40:53 : Speed analysis finished.
+03/31/20 23:40:53 : Topology Optimization started.
+03/31/20 23:40:55 : Topology Optimization finished.
+03/31/20 23:40:56 : Static analysis [subcase1] started.
+Intel(R) MKL PARDISO: [Sym][202-523MB][Num][Tri][732MB]...finished.
+03/31/20 23:41:00 : Static analysis [subcase1] finished.
+03/31/20 23:41:00 : Sensitivity analysis started.
+03/31/20 23:41:01 : Sensitivity analysis finished.
+03/31/20 23:41:01 : Static analysis [subcase2] started.
+Intel(R) MKL PARDISO: [Sym][202-523MB][Num][Tri][718MB]...finished.
+03/31/20 23:41:04 : Static analysis [subcase2] finished.
+03/31/20 23:41:04 : Sensitivity analysis started.
+03/31/20 23:41:05 : Sensitivity analysis finished.
+03/31/20 23:41:05 : Writing bulk data file ... OK
+03/31/20 23:41:05 : === Optimization step 28 finished ===
++-- Objective/Constraint functions ---
+| Iteration number 28
+| Objective function [  1] :  1.3762590e+001 (275.252%)
+| Objective function [  2] :  3.6417739e+001 (1424.030%)
+| Objective function [sum] :  2.8949210e+000 (286.626%)
+| Constraint function[  1] :  1.9999999e+004 (100.000%)
++---------------------------------------
+| More 6 min. 58 sec. will be needed.
++-------------------------------------
+03/31/20 23:41:05 : === Optimization step 29 started ===
+03/31/20 23:41:05 : Speed analysis started...
+03/31/20 23:41:09 : Speed analysis finished.
+03/31/20 23:41:09 : Topology Optimization started.
+03/31/20 23:41:10 : Topology Optimization finished.
+03/31/20 23:41:11 : Static analysis [subcase1] started.
+Intel(R) MKL PARDISO: [Sym][202-523MB][Num][Tri][751MB]...finished.
+03/31/20 23:41:14 : Static analysis [subcase1] finished.
+03/31/20 23:41:14 : Sensitivity analysis started.
+03/31/20 23:41:16 : Sensitivity analysis finished.
+03/31/20 23:41:16 : Static analysis [subcase2] started.
+Intel(R) MKL PARDISO: [Sym][202-522MB][Num][Tri][732MB]...finished.
+03/31/20 23:41:19 : Static analysis [subcase2] finished.
+03/31/20 23:41:19 : Sensitivity analysis started.
+03/31/20 23:41:20 : Sensitivity analysis finished.
+03/31/20 23:41:20 : Writing bulk data file ... OK
+03/31/20 23:41:20 : === Optimization step 29 finished ===
++-- Objective/Constraint functions ---
+| Iteration number 29
+| Objective function [  1] :  1.3736461e+001 (274.729%)
+| Objective function [  2] :  3.9542637e+001 (1546.222%)
+| Objective function [sum] :  2.9019145e+000 (287.318%)
+| Constraint function[  1] :  2.0000000e+004 (100.000%)
++---------------------------------------
+| More 6 min. 36 sec. will be needed.
++-------------------------------------
+03/31/20 23:41:20 : === Optimization step 30 started ===
+03/31/20 23:41:20 : Speed analysis started...
+03/31/20 23:41:23 : Speed analysis finished.
+03/31/20 23:41:23 : Topology Optimization started.
+03/31/20 23:41:25 : Topology Optimization finished.
+03/31/20 23:41:26 : Static analysis [subcase1] started.
+Intel(R) MKL PARDISO: [Sym][202-523MB][Num][Tri][727MB]...finished.
+03/31/20 23:41:29 : Static analysis [subcase1] finished.
+03/31/20 23:41:29 : Sensitivity analysis started.
+03/31/20 23:41:30 : Sensitivity analysis finished.
+03/31/20 23:41:30 : Static analysis [subcase2] started.
+Intel(R) MKL PARDISO: [Sym][202-523MB][Num][Tri][719MB]...finished.
+03/31/20 23:41:33 : Static analysis [subcase2] finished.
+03/31/20 23:41:33 : Sensitivity analysis started.
+03/31/20 23:41:34 : Sensitivity analysis finished.
+03/31/20 23:41:35 : Writing bulk data file ... OK
+03/31/20 23:41:35 : === Optimization step 30 finished ===
++-- Objective/Constraint functions ---
+| Iteration number 30
+| Objective function [  1] :  1.3725129e+001 (274.503%)
+| Objective function [  2] :  3.9839754e+001 (1557.840%)
+| Objective function [sum] :  2.9008098e+000 (287.209%)
+| Constraint function[  1] :  1.9999999e+004 (100.000%)
++---------------------------------------
+| More 6 min. 14 sec. will be needed.
++-------------------------------------
+03/31/20 23:41:35 : === Optimization step 31 started ===
+03/31/20 23:41:35 : Speed analysis started.
+03/31/20 23:41:38 : Speed analysis finished.
+03/31/20 23:41:38 : Topology Optimization started.
+03/31/20 23:41:40 : Topology Optimization finished.
+03/31/20 23:41:40 : Static analysis [subcase1] started.
+Intel(R) MKL PARDISO: [Sym][202-523MB][Num][Tri][733MB]...finished.
+03/31/20 23:41:44 : Static analysis [subcase1] finished.
+03/31/20 23:41:44 : Sensitivity analysis started.
+03/31/20 23:41:45 : Sensitivity analysis finished.
+03/31/20 23:41:45 : Static analysis [subcase2] started.
+Intel(R) MKL PARDISO: [Sym][202-522MB][Num][Tri][717MB]...finished.
+03/31/20 23:41:48 : Static analysis [subcase2] finished.
+03/31/20 23:41:48 : Sensitivity analysis started.
+03/31/20 23:41:49 : Sensitivity analysis finished.
+03/31/20 23:41:50 : Writing bulk data file ... OK
+03/31/20 23:41:50 : === Optimization step 31 finished ===
++-- Objective/Constraint functions ---
+| Iteration number 31
+| Objective function [  1] :  1.3705306e+001 (274.106%)
+| Objective function [  2] :  4.0604630e+001 (1587.749%)
+| Objective function [sum] :  2.8998361e+000 (287.112%)
+| Constraint function[  1] :  2.0000000e+004 (100.000%)
++---------------------------------------
+| More 5 min. 53 sec. will be needed.
++-------------------------------------
+03/31/20 23:41:50 : === Optimization step 32 started ===
+03/31/20 23:41:50 : Speed analysis started...
+03/31/20 23:41:53 : Speed analysis finished.
+03/31/20 23:41:53 : Topology Optimization started.
+03/31/20 23:41:55 : Topology Optimization finished.
+03/31/20 23:41:55 : Static analysis [subcase1] started.
+Intel(R) MKL PARDISO: [Sym][202-523MB][Num][Tri][733MB]...finished.
+03/31/20 23:41:59 : Static analysis [subcase1] finished.
+03/31/20 23:41:59 : Sensitivity analysis started.
+03/31/20 23:42:00 : Sensitivity analysis finished.
+03/31/20 23:42:00 : Static analysis [subcase2] started.
+Intel(R) MKL PARDISO: [Sym][202-523MB][Num][Tri][718MB]...finished.
+03/31/20 23:42:03 : Static analysis [subcase2] finished.
+03/31/20 23:42:03 : Sensitivity analysis started.
+03/31/20 23:42:04 : Sensitivity analysis finished.
+03/31/20 23:42:05 : Writing bulk data file ... OK
+03/31/20 23:42:05 : === Optimization step 32 finished ===
++-- Objective/Constraint functions ---
+| Iteration number 32
+| Objective function [  1] :  1.3698216e+001 (273.964%)
+| Objective function [  2] :  4.1453419e+001 (1620.939%)
+| Objective function [sum] :  2.9017371e+000 (287.301%)
+| Constraint function[  1] :  1.9999999e+004 (100.000%)
++---------------------------------------
+| More 5 min. 33 sec. will be needed.
++-------------------------------------
+03/31/20 23:42:05 : === Optimization step 33 started ===
+03/31/20 23:42:05 : Speed analysis started...
+03/31/20 23:42:08 : Speed analysis finished.
+03/31/20 23:42:08 : Topology Optimization started.
+03/31/20 23:42:10 : Topology Optimization finished.
+03/31/20 23:42:11 : Static analysis [subcase1] started.
+Intel(R) MKL PARDISO: [Sym][202-523MB][Num][Tri][732MB]...finished.
+03/31/20 23:42:14 : Static analysis [subcase1] finished.
+03/31/20 23:42:14 : Sensitivity analysis started.
+03/31/20 23:42:15 : Sensitivity analysis finished.
+03/31/20 23:42:15 : Static analysis [subcase2] started.
+Intel(R) MKL PARDISO: [Sym][202-523MB][Num][Tri][737MB]...finished.
+03/31/20 23:42:18 : Static analysis [subcase2] finished.
+03/31/20 23:42:18 : Sensitivity analysis started.
+03/31/20 23:42:19 : Sensitivity analysis finished.
+03/31/20 23:42:20 : Writing bulk data file ... OK
+03/31/20 23:42:21 : === Optimization step 33 finished ===
++-- Objective/Constraint functions ---
+| Iteration number 33
+| Objective function [  1] :  1.3695984e+001 (273.920%)
+| Objective function [  2] :  3.9271101e+001 (1535.604%)
+| Objective function [sum] :  2.8927573e+000 (286.412%)
+| Constraint function[  1] :  1.9999999e+004 (100.000%)
++---------------------------------------
+| More 5 min. 13 sec. will be needed.
++-------------------------------------
+03/31/20 23:42:21 : === Optimization step 34 started ===
+03/31/20 23:42:21 : Speed analysis started.
+03/31/20 23:42:25 : Speed analysis finished.
+03/31/20 23:42:25 : Topology Optimization started.
+03/31/20 23:42:27 : Topology Optimization finished.
+03/31/20 23:42:27 : Static analysis [subcase1] started.
+Intel(R) MKL PARDISO: [Sym][202-523MB][Num][Tri][729MB]...finished.
+03/31/20 23:42:30 : Static analysis [subcase1] finished.
+03/31/20 23:42:30 : Sensitivity analysis started.
+03/31/20 23:42:31 : Sensitivity analysis finished.
+03/31/20 23:42:31 : Static analysis [subcase2] started.
+Intel(R) MKL PARDISO: [Sym][202-523MB][Num][Tri][733MB]...finished.
+03/31/20 23:42:34 : Static analysis [subcase2] finished.
+03/31/20 23:42:34 : Sensitivity analysis started.
+03/31/20 23:42:35 : Sensitivity analysis finished.
+03/31/20 23:42:35 : Writing bulk data file ... OK
+03/31/20 23:42:36 : === Optimization step 34 finished ===
++-- Objective/Constraint functions ---
+| Iteration number 34
+| Objective function [  1] :  1.3684802e+001 (273.696%)
+| Objective function [  2] :  3.8711018e+001 (1513.704%)
+| Objective function [sum] :  2.8883308e+000 (285.973%)
+| Constraint function[  1] :  1.9999999e+004 (100.000%)
++---------------------------------------
+| More 4 min. 53 sec. will be needed.
++-------------------------------------
+03/31/20 23:42:36 : === Optimization step 35 started ===
+03/31/20 23:42:36 : Speed analysis started...
+03/31/20 23:42:40 : Speed analysis finished.
+03/31/20 23:42:40 : Topology Optimization started.
+03/31/20 23:42:42 : Topology Optimization finished.
+03/31/20 23:42:42 : Static analysis [subcase1] started.
+Intel(R) MKL PARDISO: [Sym][202-526MB][Num][Tri][745MB]...finished.
+03/31/20 23:42:45 : Static analysis [subcase1] finished.
+03/31/20 23:42:45 : Sensitivity analysis started.
+03/31/20 23:42:46 : Sensitivity analysis finished.
+03/31/20 23:42:46 : Static analysis [subcase2] started.
+Intel(R) MKL PARDISO: [Sym][202-523MB][Num][Tri][732MB]...finished.
+03/31/20 23:42:49 : Static analysis [subcase2] finished.
+03/31/20 23:42:49 : Sensitivity analysis started.
+03/31/20 23:42:50 : Sensitivity analysis finished.
+03/31/20 23:42:51 : Writing bulk data file ... OK
+03/31/20 23:42:51 : === Optimization step 35 finished ===
++-- Objective/Constraint functions ---
+| Iteration number 35
+| Objective function [  1] :  1.3670601e+001 (273.412%)
+| Objective function [  2] :  3.9708403e+001 (1552.704%)
+| Objective function [sum] :  2.8893905e+000 (286.078%)
+| Constraint function[  1] :  1.9999999e+004 (100.000%)
++---------------------------------------
+| More 4 min. 33 sec. will be needed.
++-------------------------------------
+03/31/20 23:42:51 : === Optimization step 36 started ===
+03/31/20 23:42:51 : Speed analysis started...
+03/31/20 23:42:55 : Speed analysis finished.
+03/31/20 23:42:55 : Topology Optimization started.
+03/31/20 23:42:57 : Topology Optimization finished.
+03/31/20 23:42:57 : Static analysis [subcase1] started.
+Intel(R) MKL PARDISO: [Sym][202-524MB][Num][Tri][732MB]...finished.
+03/31/20 23:43:00 : Static analysis [subcase1] finished.
+03/31/20 23:43:00 : Sensitivity analysis started.
+03/31/20 23:43:01 : Sensitivity analysis finished.
+03/31/20 23:43:01 : Static analysis [subcase2] started.
+Intel(R) MKL PARDISO: [Sym][202-523MB][Num][Tri][728MB]...finished.
+03/31/20 23:43:04 : Static analysis [subcase2] finished.
+03/31/20 23:43:04 : Sensitivity analysis started.
+03/31/20 23:43:05 : Sensitivity analysis finished.
+03/31/20 23:43:06 : Writing bulk data file ... OK
+03/31/20 23:43:06 : === Optimization step 36 finished ===
++-- Objective/Constraint functions ---
+| Iteration number 36
+| Objective function [  1] :  1.3666684e+001 (273.334%)
+| Objective function [  2] :  3.9389603e+001 (1540.238%)
+| Objective function [sum] :  2.8873606e+000 (285.877%)
+| Constraint function[  1] :  1.9999999e+004 (100.000%)
++---------------------------------------
+| More 4 min. 14 sec. will be needed.
++-------------------------------------
+03/31/20 23:43:06 : === Optimization step 37 started ===
+03/31/20 23:43:06 : Speed analysis started.
+03/31/20 23:43:10 : Speed analysis finished.
+03/31/20 23:43:11 : Topology Optimization started.
+03/31/20 23:43:12 : Topology Optimization finished.
+03/31/20 23:43:13 : Static analysis [subcase1] started.
+Intel(R) MKL PARDISO: [Sym][202-524MB][Num][Tri][733MB]...finished.
+03/31/20 23:43:16 : Static analysis [subcase1] finished.
+03/31/20 23:43:16 : Sensitivity analysis started.
+03/31/20 23:43:17 : Sensitivity analysis finished.
+03/31/20 23:43:17 : Static analysis [subcase2] started.
+Intel(R) MKL PARDISO: [Sym][202-528MB][Num][Tri][762MB]...finished.
+03/31/20 23:43:20 : Static analysis [subcase2] finished.
+03/31/20 23:43:20 : Sensitivity analysis started.
+03/31/20 23:43:22 : Sensitivity analysis finished.
+03/31/20 23:43:22 : Writing bulk data file ... OK
+03/31/20 23:43:23 : === Optimization step 37 finished ===
++-- Objective/Constraint functions ---
+| Iteration number 37
+| Objective function [  1] :  1.3652973e+001 (273.059%)
+| Objective function [  2] :  3.8670376e+001 (1512.114%)
+| Objective function [sum] :  2.8818060e+000 (285.327%)
+| Constraint function[  1] :  1.9999999e+004 (100.000%)
++---------------------------------------
+| More 3 min. 55 sec. will be needed.
++-------------------------------------
+03/31/20 23:43:23 : === Optimization step 38 started ===
+03/31/20 23:43:23 : Speed analysis started...
+03/31/20 23:43:27 : Speed analysis finished.
+03/31/20 23:43:27 : Topology Optimization started.
+03/31/20 23:43:28 : Topology Optimization finished.
+03/31/20 23:43:29 : Static analysis [subcase1] started.
+Intel(R) MKL PARDISO: [Sym][202-522MB][Num][Tri][722MB]...finished.
+03/31/20 23:43:31 : Static analysis [subcase1] finished.
+03/31/20 23:43:31 : Sensitivity analysis started.
+03/31/20 23:43:32 : Sensitivity analysis finished.
+03/31/20 23:43:32 : Static analysis [subcase2] started.
+Intel(R) MKL PARDISO: [Sym][202-524MB][Num][Tri][714MB]...finished.
+03/31/20 23:43:35 : Static analysis [subcase2] finished.
+03/31/20 23:43:35 : Sensitivity analysis started.
+03/31/20 23:43:36 : Sensitivity analysis finished.
+03/31/20 23:43:36 : Writing bulk data file ... OK
+03/31/20 23:43:36 : === Optimization step 38 finished ===
++-- Objective/Constraint functions ---
+| Iteration number 38
+| Objective function [  1] :  1.3636066e+001 (272.721%)
+| Objective function [  2] :  3.9337094e+001 (1538.185%)
+| Objective function [sum] :  2.8810318e+000 (285.251%)
+| Constraint function[  1] :  1.9999999e+004 (100.000%)
++---------------------------------------
+| More 3 min. 36 sec. will be needed.
++-------------------------------------
+03/31/20 23:43:36 : === Optimization step 39 started ===
+03/31/20 23:43:36 : Speed analysis started...
+03/31/20 23:43:38 : Speed analysis finished.
+03/31/20 23:43:38 : Topology Optimization started.
+03/31/20 23:43:39 : Topology Optimization finished.
+03/31/20 23:43:39 : Static analysis [subcase1] started.
+Intel(R) MKL PARDISO: [Sym][202-524MB][Num][Tri][711MB]...finished.
+03/31/20 23:43:42 : Static analysis [subcase1] finished.
+03/31/20 23:43:42 : Sensitivity analysis started.
+03/31/20 23:43:43 : Sensitivity analysis finished.
+03/31/20 23:43:43 : Static analysis [subcase2] started.
+Intel(R) MKL PARDISO: [Sym][202-522MB][Num][Tri][727MB]...finished.
+03/31/20 23:43:45 : Static analysis [subcase2] finished.
+03/31/20 23:43:45 : Sensitivity analysis started.
+03/31/20 23:43:46 : Sensitivity analysis finished.
+03/31/20 23:43:46 : Writing bulk data file ... OK
+03/31/20 23:43:47 : === Optimization step 39 finished ===
++-- Objective/Constraint functions ---
+| Iteration number 39
+| Objective function [  1] :  1.3624557e+001 (272.491%)
+| Objective function [  2] :  3.9903894e+001 (1560.348%)
+| Objective function [sum] :  2.8809463e+000 (285.242%)
+| Constraint function[  1] :  1.9999999e+004 (100.000%)
++---------------------------------------
+| More 3 min. 16 sec. will be needed.
++-------------------------------------
+03/31/20 23:43:47 : === Optimization step 40 started ===
+03/31/20 23:43:47 : Speed analysis started.
+03/31/20 23:43:48 : Speed analysis finished.
+03/31/20 23:43:48 : Topology Optimization started.
+03/31/20 23:43:50 : Topology Optimization finished.
+03/31/20 23:43:50 : Static analysis [subcase1] started.
+Intel(R) MKL PARDISO: [Sym][202-524MB][Num][Tri][740MB]...finished.
+03/31/20 23:43:52 : Static analysis [subcase1] finished.
+03/31/20 23:43:52 : Sensitivity analysis started.
+03/31/20 23:43:53 : Sensitivity analysis finished.
+03/31/20 23:43:53 : Static analysis [subcase2] started.
+Intel(R) MKL PARDISO: [Sym][202-525MB][Num][Tri][745MB]...finished.
+03/31/20 23:43:56 : Static analysis [subcase2] finished.
+03/31/20 23:43:56 : Sensitivity analysis started.
+03/31/20 23:43:57 : Sensitivity analysis finished.
+03/31/20 23:43:57 : Writing bulk data file ... OK
+03/31/20 23:43:57 : === Optimization step 40 finished ===
++-- Objective/Constraint functions ---
+| Iteration number 40
+| Objective function [  1] :  1.3613455e+001 (272.269%)
+| Objective function [  2] :  4.0595358e+001 (1587.386%)
+| Objective function [sum] :  2.8814296e+000 (285.290%)
+| Constraint function[  1] :  1.9999999e+004 (100.000%)
++---------------------------------------
+| More 2 min. 56 sec. will be needed.
++-------------------------------------
+03/31/20 23:43:58 : === Optimization step 41 started ===
+03/31/20 23:43:58 : Speed analysis started...
+03/31/20 23:43:59 : Speed analysis finished.
+03/31/20 23:43:59 : Topology Optimization started.
+03/31/20 23:44:00 : Topology Optimization finished.
+03/31/20 23:44:01 : Static analysis [subcase1] started.
+Intel(R) MKL PARDISO: [Sym][202-525MB][Num][Tri][734MB]...finished.
+03/31/20 23:44:02 : Static analysis [subcase1] finished.
+03/31/20 23:44:02 : Sensitivity analysis started.
+03/31/20 23:44:03 : Sensitivity analysis finished.
+03/31/20 23:44:03 : Static analysis [subcase2] started.
+Intel(R) MKL PARDISO: [Sym][202-523MB][Num][Tri][718MB]...finished.
+03/31/20 23:44:05 : Static analysis [subcase2] finished.
+03/31/20 23:44:05 : Sensitivity analysis started.
+03/31/20 23:44:05 : Sensitivity analysis finished.
+03/31/20 23:44:06 : Writing bulk data file ... OK
+03/31/20 23:44:06 : === Optimization step 41 finished ===
++-- Objective/Constraint functions ---
+| Iteration number 41
+| Objective function [  1] :  1.3608656e+001 (272.173%)
+| Objective function [  2] :  4.0027710e+001 (1565.190%)
+| Objective function [sum] :  2.8782501e+000 (284.975%)
+| Constraint function[  1] :  1.9999999e+004 (100.000%)
++---------------------------------------
+| More 2 min. 36 sec. will be needed.
++-------------------------------------
+03/31/20 23:44:06 : === Optimization step 42 started ===
+03/31/20 23:44:06 : Speed analysis started...
+03/31/20 23:44:07 : Speed analysis finished.
+03/31/20 23:44:07 : Topology Optimization started.
+03/31/20 23:44:08 : Topology Optimization finished.
+03/31/20 23:44:08 : Static analysis [subcase1] started.
+Intel(R) MKL PARDISO: [Sym][202-522MB][Num][Tri][694MB]...finished.
+03/31/20 23:44:10 : Static analysis [subcase1] finished.
+03/31/20 23:44:10 : Sensitivity analysis started.
+03/31/20 23:44:11 : Sensitivity analysis finished.
+03/31/20 23:44:11 : Static analysis [subcase2] started.
+Intel(R) MKL PARDISO: [Sym][202-522MB][Num][Tri][708MB]...finished.
+03/31/20 23:44:12 : Static analysis [subcase2] finished.
+03/31/20 23:44:12 : Sensitivity analysis started.
+03/31/20 23:44:13 : Sensitivity analysis finished.
+03/31/20 23:44:13 : Writing bulk data file ... OK
+03/31/20 23:44:14 : === Optimization step 42 finished ===
++-- Objective/Constraint functions ---
+| Iteration number 42
+| Objective function [  1] :  1.3604198e+001 (272.084%)
+| Objective function [  2] :  3.9489536e+001 (1544.146%)
+| Objective function [sum] :  2.8752542e+000 (284.679%)
+| Constraint function[  1] :  1.9999999e+004 (100.000%)
++---------------------------------------
+| More 2 min. 17 sec. will be needed.
++-------------------------------------
+03/31/20 23:44:14 : === Optimization step 43 started ===
+03/31/20 23:44:14 : Speed analysis started.
+03/31/20 23:44:15 : Speed analysis finished.
+03/31/20 23:44:15 : Topology Optimization started.
+03/31/20 23:44:16 : Topology Optimization finished.
+03/31/20 23:44:16 : Static analysis [subcase1] started.
+Intel(R) MKL PARDISO: [Sym][202-523MB][Num][Tri][737MB]...finished.
+03/31/20 23:44:18 : Static analysis [subcase1] finished.
+03/31/20 23:44:18 : Sensitivity analysis started.
+03/31/20 23:44:18 : Sensitivity analysis finished.
+03/31/20 23:44:18 : Static analysis [subcase2] started.
+Intel(R) MKL PARDISO: [Sym][202-523MB][Num][Tri][737MB]...finished.
+03/31/20 23:44:20 : Static analysis [subcase2] finished.
+03/31/20 23:44:20 : Sensitivity analysis started.
+03/31/20 23:44:21 : Sensitivity analysis finished.
+03/31/20 23:44:21 : Writing bulk data file ... OK
+03/31/20 23:44:21 : === Optimization step 43 finished ===
++-- Objective/Constraint functions ---
+| Iteration number 43
+| Objective function [  1] :  1.3600699e+001 (272.014%)
+| Objective function [  2] :  3.9797780e+001 (1556.199%)
+| Objective function [sum] :  2.8757598e+000 (284.729%)
+| Constraint function[  1] :  1.9999999e+004 (100.000%)
++---------------------------------------
+| More 1 min. 58 sec. will be needed.
++-------------------------------------
+03/31/20 23:44:21 : === Optimization step 44 started ===
+03/31/20 23:44:21 : Speed analysis started...
+03/31/20 23:44:22 : Speed analysis finished.
+03/31/20 23:44:22 : Topology Optimization started.
+03/31/20 23:44:23 : Topology Optimization finished.
+03/31/20 23:44:23 : Static analysis [subcase1] started.
+Intel(R) MKL PARDISO: [Sym][202-523MB][Num][Tri][721MB]...finished.
+03/31/20 23:44:26 : Static analysis [subcase1] finished.
+03/31/20 23:44:26 : Sensitivity analysis started.
+03/31/20 23:44:26 : Sensitivity analysis finished.
+03/31/20 23:44:26 : Static analysis [subcase2] started.
+Intel(R) MKL PARDISO: [Sym][202-522MB][Num][Tri][712MB]...finished.
+03/31/20 23:44:28 : Static analysis [subcase2] finished.
+03/31/20 23:44:28 : Sensitivity analysis started.
+03/31/20 23:44:29 : Sensitivity analysis finished.
+03/31/20 23:44:29 : Writing bulk data file ... OK
+----------------------------------------
+Object[  1]  1.3599067e+001 (271.981%)
+Object[  2]  3.9945707e+001 (1561.983%)
+Object[sum]  2.8760118e+000 (284.754%)
+Const [  1]  1.9999999e+004 (100.000%)
+----------------------------------------
+03/31/20 23:44:30 : Topology Optimization started.
+03/31/20 23:44:31 : Topology Optimization finished.
+03/31/20 23:44:31 : Static analysis [subcase1] started.
+Intel(R) MKL PARDISO: [Sym][202-528MB][Num][Tri][752MB]...finished.
+03/31/20 23:44:33 : Static analysis [subcase1] finished.
+03/31/20 23:44:33 : Sensitivity analysis started.
+03/31/20 23:44:34 : Sensitivity analysis finished.
+03/31/20 23:44:34 : Static analysis [subcase2] started.
+Intel(R) MKL PARDISO: [Sym][202-523MB][Num][Tri][728MB]...finished.
+03/31/20 23:44:36 : Static analysis [subcase2] finished.
+03/31/20 23:44:36 : Sensitivity analysis started.
+03/31/20 23:44:36 : Sensitivity analysis finished.
+03/31/20 23:44:37 : Writing bulk data file ... OK
+03/31/20 23:44:37 : === Optimization step 44 finished ===
++-- Objective/Constraint functions ---
+| Iteration number 44
+| Objective function [  1] :  1.3599973e+001 (271.999%)
+| Objective function [  2] :  3.9757066e+001 (1554.607%)
+| Objective function [sum] :  2.8754552e+000 (284.699%)
+| Constraint function[  1] :  1.9999999e+004 (100.000%)
++---------------------------------------
+| More 1 min. 41 sec. will be needed.
++-------------------------------------
+03/31/20 23:44:37 : === Optimization step 45 started ===
+03/31/20 23:44:37 : Speed analysis started...
+03/31/20 23:44:38 : Speed analysis finished.
+03/31/20 23:44:38 : Topology Optimization started.
+03/31/20 23:44:39 : Topology Optimization finished.
+03/31/20 23:44:39 : Static analysis [subcase1] started.
+Intel(R) MKL PARDISO: [Sym][202-523MB][Num][Tri][723MB]...finished.
+03/31/20 23:44:41 : Static analysis [subcase1] finished.
+03/31/20 23:44:41 : Sensitivity analysis started.
+03/31/20 23:44:42 : Sensitivity analysis finished.
+03/31/20 23:44:42 : Static analysis [subcase2] started.
+Intel(R) MKL PARDISO: [Sym][202-522MB][Num][Tri][742MB]...finished.
+03/31/20 23:44:44 : Static analysis [subcase2] finished.
+03/31/20 23:44:44 : Sensitivity analysis started.
+03/31/20 23:44:45 : Sensitivity analysis finished.
+03/31/20 23:44:45 : Writing bulk data file ... OK
+03/31/20 23:44:46 : === Optimization step 45 finished ===
++-- Objective/Constraint functions ---
+| Iteration number 45
+| Objective function [  1] :  1.3597720e+001 (271.954%)
+| Objective function [  2] :  3.9740353e+001 (1553.953%)
+| Objective function [sum] :  2.8749393e+000 (284.647%)
+| Constraint function[  1] :  1.9999999e+004 (100.000%)
++---------------------------------------
+| More 1 min. 23 sec. will be needed.
++-------------------------------------
+03/31/20 23:44:46 : === Optimization step 46 started ===
+03/31/20 23:44:46 : Speed analysis started.
+03/31/20 23:44:47 : Speed analysis finished.
+03/31/20 23:44:47 : Topology Optimization started.
+03/31/20 23:44:48 : Topology Optimization finished.
+03/31/20 23:44:48 : Static analysis [subcase1] started.
+Intel(R) MKL PARDISO: [Sym][202-526MB][Num][Tri][740MB]...finished.
+03/31/20 23:44:50 : Static analysis [subcase1] finished.
+03/31/20 23:44:50 : Sensitivity analysis started.
+03/31/20 23:44:51 : Sensitivity analysis finished.
+03/31/20 23:44:51 : Static analysis [subcase2] started.
+Intel(R) MKL PARDISO: [Sym][202-523MB][Num][Tri][704MB]...finished.
+03/31/20 23:44:53 : Static analysis [subcase2] finished.
+03/31/20 23:44:53 : Sensitivity analysis started.
+03/31/20 23:44:53 : Sensitivity analysis finished.
+03/31/20 23:44:54 : Writing bulk data file ... OK
+03/31/20 23:44:54 : === Optimization step 46 finished ===
++-- Objective/Constraint functions ---
+| Iteration number 46
+| Objective function [  1] :  1.3595592e+001 (271.912%)
+| Objective function [  2] :  3.9879160e+001 (1559.381%)
+| Objective function [sum] :  2.8750566e+000 (284.659%)
+| Constraint function[  1] :  1.9999999e+004 (100.000%)
++---------------------------------------
+| More 1 min. 6 sec. will be needed.
++-------------------------------------
++-------------------------------
+| OPTISHAPE-TS has converged    
++-------------------------------
+03/31/20 23:44:54 : === Optimization finished ===
++--- Analysis Summary ---
+|[Subcase 1]
+| Static Analysis
+|  Max. Displacement: 1.4154127e-001 (Node ID = 26582)
+|   TX: 1.4153380e-001  TY:-1.4545298e-003  TZ: 4.2344615e-007
+|   RX: 0.0000000e+000  RY: 0.0000000e+000  RZ: 0.0000000e+000
+|  Max. Mises Stress of Solid/Shell Element: 1.2736085e+000
+| 
+|[Subcase 2]
+| Static Analysis
+|  Max. Displacement: 6.8631770e-001 (Node ID = 26914)
+|   TX: 6.8615924e-001  TY:-1.4743135e-002  TZ:-3.3391110e-004
+|   RX: 0.0000000e+000  RY: 0.0000000e+000  RZ: 0.0000000e+000
+|  Max. Mises Stress of Solid/Shell Element: 1.5285273e+001
+| 
+| Assigned Memory   :   16000[MB]
+| Max. Memory Usage :    1001[MB]
+| Elapsed Time      :   781.0[Sec]  ( 0 Hour 13 Min  1.0 Sec)
+| CPU Time          :   780.1[Sec]  ( 0 Hour 13 Min  0.1 Sec)
++------------------------
++--------------------------------
+| OPTISHAPE-TS Topology Finished 
++--------------------------------
